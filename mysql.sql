@@ -66,3 +66,35 @@ CREATE TABLE users(
     FOREIGN KEY (username)
     REFERENCES memeland.memesaprobados(username)
     );
+
+-- NO HACE FALTA SERIA DUPLICAR LAS FK
+-- ALTER TABLE memeland.memescreados
+-- ADD CONSTRAINT fk_memescreados3
+-- FOREIGN KEY (idmeme)
+-- REFERENCES memeland.memes(idmeme),
+-- ADD CONSTRAINT fk_memescreados4
+-- FOREIGN KEY (username)
+-- REFERENCES memeland.users(username);
+
+-- ALTER TABLE memeland.memesguardados
+-- ADD CONSTRAINT fk_memesguardados3
+-- FOREIGN KEY (idmeme)
+-- REFERENCES memeland.memes(idmeme),
+-- ADD CONSTRAINT fk_memesguardados4
+-- FOREIGN KEY (username)
+-- REFERENCES memeland.users(username);
+
+-- ALTER TABLE memeland.memesaprobados
+-- ADD CONSTRAINT fk_memesaprobados3
+-- FOREIGN KEY (idmeme)
+-- REFERENCES memeland.memes(idmeme),
+-- ADD CONSTRAINT fk_memesaprobados4
+-- FOREIGN KEY (username)
+-- REFERENCES memeland.users(username);
+
+-- agregar 
+INSERT INTO memesaprobados VALUES (1, 'brian');
+INSERT INTO memescreados VALUES (1, 'brian');
+INSERT INTO memesguardados VALUES (1, 'brian');
+INSERT INTO memes VALUES (1, 'titulodelmeme', 'descripcion del meme', 'C:\git\senpai-fed-project-app\public\memes\acertijos\meme-1.jpg', 'acertijos', 20191020235959, true, 0, 0, 0 );
+INSERT INTO users VALUES ('brian', 'luisbrian', 'password', true, 19961210, 'algo sobre mi', 0, true);
