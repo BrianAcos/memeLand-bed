@@ -1,10 +1,15 @@
 //importo modulos
-const mysql = require('mysql');
 const express = require('express')
 const app = express();
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const bcrypt = require('bcrypt');
+const session = require('express-session');
+//importo coneccion a la Data Base
+const db = require('./services/db-connection');
+//importo modules 
+const Memes = require('./models/memes');
+const Users = require('./models/users');
 
 //numero para bcrypt
 const saltRounds = 10;
@@ -16,38 +21,38 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //configurar multer
 const upload = multer({ dest: 'public/memes/' });
 
-//establesco parametros de coneccion con mi base de datos
-const connection = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: 'password',
-    database: 'memeland',
-});
-
-//conecto mi base de batos
-connection.connect(function (err) {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log('DB Conected');
-    }
-});
+//configurar express-session
+app.use(session({
+    secret: 'my secret',
+    cookie: {maxAge: 43200000}, //12horas
+    resave: false,
+    saveUninitialized: true,
+}));
 
 //obtengo todos los memes
-app.get('/api/memes', function (req, res) {
-    connection.query('SELECT * FROM memes', (err, rows, fields) => {
-        if (!err) {
-            res.json(rows);
-        } else {
-            console.log(err);
-        }
-    });
-});
+// sin promesas
+// app.get('/api/memes', function (req, res) {
+//     db.query('SELECT * FROM memes', (err, rows, fields) => {
+//         if (!err) {
+//             res.json(rows);
+//         } else {
+//             console.log(err);
+//         }
+//     });
+// });
+// con promesas
+app.get('/api/memes', (req, res) => Memes.getAllMemes()
+    .then(function (memes) {
+        res.json(memes);
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+);
 
 //agregar memes
 app.post('/api/memes', upload.single('imagen'), function (req, res) {
-    connection.query('INSERT INTO memes VALUES (0, "brian", ?, null, ?, ?, NOW(), 0, 0, 0, 0)', [req.body.titulo, 'memes/' + req.file.filename, req.body.categoria], (err, rows, fields) => {
-        console.log(req.body);
+    db.query('INSERT INTO memes VALUES (0, "brian", ?, null, ?, ?, NOW(), 0, 0, 0, 0)', [req.body.titulo, 'memes/' + req.file.filename, req.body.categoria], (err, rows, fields) => {
         if (err) {
             console.log(err);
             res.end('ERROR');
@@ -56,10 +61,16 @@ app.post('/api/memes', upload.single('imagen'), function (req, res) {
         }
     });
 });
+// app.post('/api/memes', upload.single('imagen'), (req, res) => {
+//     const newMeme = new Memes(0, "brian", req.body.titulo, null, 'memes/' + req.file.filename, req.body.categoria, "NOW()", 0, 0, 0, 0)
+//      newMeme.save()
+//      .then (function())
+// });
+
 
 //obtener usuarios
 app.get('/api/users', function (req, res) {
-    connection.query('SELECT * FROM users', (err, rows, fields) => {
+    db.query('SELECT * FROM users', (err, rows, fields) => {
         if (err) {
             res.end('ERROR')
             console.log(err);
@@ -75,7 +86,7 @@ app.post('/api/users', upload.single('imagen'), function (req, res) {
         if (err) {
             res.end('ERROR BCRYPT')
         } else {
-            connection.query('INSERT INTO users VALUES (?, ?, ?, ?, null, null, null, null, 0, 0)', [req.body.username, hash, req.body.nombre, req.body.email], (err, rows, fields) => {
+            db.query('INSERT INTO users VALUES (?, ?, ?, ?, null, null, null, null, 0, 0)', [req.body.username, hash, req.body.nombre, req.body.email], (err, rows, fields) => {
                 if (err) {
                     console.log(err);
                     res.end('ERROR');
@@ -89,10 +100,9 @@ app.post('/api/users', upload.single('imagen'), function (req, res) {
 
 //login usuario
 app.post('/api/login', function(req, res) {
-    connection.query('SELECT * FROM users WHERE username = ?', [req.body.username], function (err, result) {
+    db.query('SELECT * FROM users WHERE username = ?', [req.body.username], function (err, result) {
         if (result.length === 0) {
             res.end('DATOS INVALIDOS1');
-            console.log(req.body);
         } else {
             bcrypt.compare(req.body.password, result[0].password, function (err, resu) {
                 if (resu == true) {
