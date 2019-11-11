@@ -23,8 +23,10 @@ class Users {
     static getUserById(ID) {
         return new Promise((resolve, reject) => {
             db.query(GET_USER_ID, [ID], (err, result) => {
-                if (err || result[0] === undefined) {
+                if (err) {
                     reject(err);
+                } else if (result[0] === undefined) {
+                    resolve('404 not found')
                 } else {
                     const user = result[0];
                     const modelUser = new Users(user.username, user.password, user.nombre, user.mail, user.sexo, user.birthday, user.avatar, user.sobremi, user.puntaje, user.administrador);
@@ -53,8 +55,10 @@ class Users {
     static deleteUserById(ID) {
         return new Promise((resolve, reject) => {
             db.query(GET_USER_ID, [ID], (error, result) => {
-                if (error || result[0] === undefined) {
+                if (error) {
                     reject(error)
+                } else if (result[0] === undefined) {
+                    resolve('404 not found')
                 } else {
                     db.query(DELETE_USER, [ID], (err, result) => {
                         if (err) {
@@ -91,6 +95,10 @@ class Users {
                 }
             });
         });
+    }
+
+    static convertJSON(string) {
+        return JSON.stringify(string);
     }
 }
 

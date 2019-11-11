@@ -23,8 +23,10 @@ class Memes {
     static getMemeById(ID) {
         return new Promise((resolve, reject) => {
             db.query(GET_MEME_ID, [ID], (error, result) => {
-                if (error || result[0] === undefined) {
+                if (error) {
                     reject(error)
+                } else if (result[0] === undefined) {
+                    resolve('404 not found')
                 } else {
                     const meme = result[0];
                     const modelNewMeme = new Memes(meme.idmeme, meme.creador, meme.titulo, meme.tags, meme.foto, meme.categoria, meme.fecha, meme.aprobacion, meme.votos, meme.puntaje);
@@ -54,8 +56,10 @@ class Memes {
     static deleteMemeById(ID) {
         return new Promise((resolve, reject) => {
             db.query(GET_MEME_ID, [ID], (error, result) => {
-                if (error || result[0] === undefined) {
+                if (error) {
                     reject(error)
+                } else if (result[0] === undefined) {
+                    resolve('404 not found')
                 } else {
                     db.query(DELETE_MEME, [ID], (err, result) => {
                         if (err) {
@@ -94,20 +98,8 @@ class Memes {
         });
     }
 
-    convertJSON() {
-        const jsonUser = {
-            idmeme: this.idmeme,
-            creador: this.creador,
-            titulo: this.titulo,
-            tags: this.tags,
-            foto: this.foto,
-            categoria: this.categoria,
-            fecha: this.fecha,
-            aprobacion: this.aprobacion,
-            votos: this.votos,
-            puntaje: this.puntaje,
-        };
-        return JSON.stringify(jsonUser);
+    static convertJSON(string) {
+        return JSON.stringify(string);
     }
 }
 

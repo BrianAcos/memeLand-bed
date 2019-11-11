@@ -16,7 +16,7 @@ const upload = multer({ dest: 'public/memes/' });
 router.get('/:id', (req, res, next) => {
     Memes.getMemeById(req.params.id)
         .then((meme) => {
-            res.send(meme.convertJSON())
+            res.send(Memes.convertJSON(meme))
         })
         .catch((error) => {
             next(error);
@@ -33,7 +33,7 @@ router.get('/', (req, res, next) => Memes.getAllMemes()
     })
 );
 
-// guardar memes
+// guardar memes (foto, nombre de usuario, tags, titulo, categoria)
 router.post('/', upload.single('imagen'), (req, res, next) => {
     const user = 'brian'
     const tags = req.body.tags
@@ -61,7 +61,7 @@ router.delete('/:id', (req, res, next) => {
         })
 });
 
-//modificar un meme
+//modificar un meme (solo se puede modificar el titulo, tags y categoria)
 router.put('/:id', (req, res, next) => {
     const id = req.params.id;
     const titulo = req.body.titulo;

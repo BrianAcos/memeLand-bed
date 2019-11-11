@@ -20,7 +20,7 @@ const upload = multer({ dest: 'public/users/' });
 router.get('/:id', (req, res, next) => {
     Users.getUserById(req.params.id)
         .then((user) => {
-            res.send(user)
+            res.send(Users.convertJSON(user))
         })
         .catch((error) => {
             next(error)
@@ -36,7 +36,7 @@ router.get('/', (req, res, next) => Users.getAllUsers()
         next(error)
     }));
 
-// guardar user
+// guardar user (nombre de usuario, contraseña, nombre, email, sexo, cumpleaños, avatar, sobremi)
 router.post('/', upload.single('avatar'), (req, res, next) => {
     const username = req.body.username;
     const nombre = req.body.nombre;
@@ -74,7 +74,7 @@ router.delete('/:id', (req, res, next) => {
         })
 });
 
-//modificar un user
+//modificar un user (sexo, cumpleaños, sobremi)
 router.put('/:id', (req, res, next) => {
     const id = req.params.id;
     const sexo = req.body.sexo;
