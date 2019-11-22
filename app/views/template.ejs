@@ -1,0 +1,13 @@
+<html>
+<head>
+    <title><%=pageTitle%></title>
+    <link href="<%=pageName%>.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app"><%-content-%></div>
+    <script>
+      window.__STATE__ = '<%-JSON.stringify(initialState)-%>';
+    </script>
+    <script type="text/javascript" src="<%=pageName%>.js"></script>
+</body>
+</html>

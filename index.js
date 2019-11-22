@@ -1,4 +1,9 @@
-// importo config.js
+// requiero a babel
+require('@babel/register')({
+    ignore: ['node_modules'],
+  });
+
+// importo config.js 
 const config = require('./config');
 
 //importo la index.js de api y app
@@ -15,6 +20,10 @@ const session = require('express-session');
 //Configuro express
 const app = express();
 app.use(express.static(config.static));
+
+// Configuraciones de express para ejs
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/app/views');
 
 //importo coneccion a la Data Base
 const db = require('./services/db-connection');

@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const todoListRouter = require('./pages/to-do-list');
+const memeLandRouter = require('./pages/meme-land');
 const { appErrorHandler } = require('../middlewares/error-handler');
 
-router.use('/to-do-list', todoListRouter);
+router.use('/', memeLandRouter);
 router.use(appErrorHandler);
 
 module.exports = router;
