@@ -40,7 +40,7 @@ router.post('/', upload.single('imagen'), (req, res, next) => {
     const titulo = req.body.titulo;
     const categoria = req.body.categoria;
     const imagen = `memes/${req.file.filename}`
-    const newMeme = new Memes(0, user, titulo, tags, imagen, categoria, "NOW()", null, 0, 0);
+    const newMeme = new Memes(0, user, titulo, tags, imagen, categoria, "NOW()", null, 0, 0, 0);
     newMeme.save()
         .then((() => {
             res.send(`${user} felicitaciones! has agregado un nevo meme`);

@@ -1,6 +1,6 @@
 import React from 'react';
-import TarjetaFavoritos from '../components/tarjetaFavoritos';
-import Filtros from '../components/filtros';
+import Tarjeta from '../tarjeta';
+import Filtros from '../filtros';
 
 class Favoritos extends React.Component {
     render() {
@@ -13,7 +13,7 @@ class Favoritos extends React.Component {
                     <Filtros goToFavoritos={this.props.goToFavoritos} setCategoria={this.props.setCategoria} />
                     <div className="col contenido">
                         <div className="row">
-                            {memesFiltrados.map(item => <TarjetaFavoritos meme={item} key={item.id} setFav={this.props.setFav} setLike={this.props.setLike} setDislike={this.props.setDislike} />)}
+                            {memesFiltrados.map(item => <Tarjeta id={item.idmeme} meme={item} key={item.idmeme} setFav={this.props.setFav} setLike={this.props.setLike} setDislike={this.props.setDislike} />)}
                         </div>
                     </div>
                 </div>

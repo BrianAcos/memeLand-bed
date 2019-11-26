@@ -2,12 +2,12 @@ const db = require('../services/db-connection');
 
 const GET_USERS = 'SELECT * FROM users';
 const GET_USER_ID = 'SELECT * FROM users WHERE username = ?';
-const SAVE_USERS = 'INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, 0)';
+const SAVE_USERS = 'INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?,0, 0, 0)';
 const DELETE_USER = 'DELETE FROM users WHERE username = ?';
 const MODIFY_USER = 'UPDATE users SET sexo = ?, birthday = ?, sobremi = ? WHERE username = ?';
 
 class Users {
-    constructor(username, password, nombre, mail, sexo, birthday, avatar, sobremi, puntaje, administrador) {
+    constructor(username, password, nombre, mail, sexo, birthday, avatar, sobremi, votos, puntaje, administrador) {
         this.username = username;
         this.password = password;
         this.nombre = nombre;
@@ -16,6 +16,7 @@ class Users {
         this.birthday = birthday;
         this.avatar = avatar;
         this.sobremi = sobremi;
+        this.votos = votos;
         this.puntaje = puntaje;
         this.administrador = administrador;
     }
@@ -29,7 +30,7 @@ class Users {
                     resolve('404 not found')
                 } else {
                     const user = result[0];
-                    const modelUser = new Users(user.username, user.password, user.nombre, user.mail, user.sexo, user.birthday, user.avatar, user.sobremi, user.puntaje, user.administrador);
+                    const modelUser = new Users(user.username, user.password, user.nombre, user.mail, user.sexo, user.birthday, user.avatar, user.sobremi, user.votos, user.puntaje, user.administrador);
                     resolve(modelUser); 
                 }
             });
@@ -43,8 +44,8 @@ class Users {
                     reject(err)
                 } else {
                     const users = results.map((result) => {
-                        const { username, password, nombre, mail, sexo, birthday, avatar, sobremi, puntaje, administrador } = result;
-                        return new Users(username, password, nombre, mail, sexo, birthday, avatar, sobremi, puntaje, administrador)
+                        const { username, password, nombre, mail, sexo, birthday, avatar, sobremi, votos, puntaje, administrador } = result;
+                        return new Users(username, password, nombre, mail, sexo, birthday, avatar, sobremi, votos, puntaje, administrador)
                      });
                      resolve(users)
                 }
@@ -85,9 +86,9 @@ class Users {
     }
 
     save() {
-        const { username, password, nombre, mail, sexo, birthday, avatar, sobremi, puntaje, administrador } = this;
+        const { username, password, nombre, mail, sexo, birthday, avatar, sobremi, votos, puntaje, administrador } = this;
         return new Promise((resolve, reject) => {
-            db.query(SAVE_USERS, [username, password, nombre, mail, sexo, birthday, avatar, sobremi, puntaje, administrador], (err, resp, fields) => {
+            db.query(SAVE_USERS, [username, password, nombre, mail, sexo, birthday, avatar, sobremi, votos, puntaje, administrador], (err, resp, fields) => {
                 if(err) {
                     reject(err)
                 } else {

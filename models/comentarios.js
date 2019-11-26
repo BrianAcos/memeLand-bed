@@ -1,72 +1,73 @@
 const db = require('../services/db-connection');
 
-const GET_FAVORITOS_BY_MEME = 'SELECT * FROM favoritos WHERE idmeme = ?';
-const GET_FAVORITOS_BY_USERNAME = 'SELECT * FROM favoritos WHERE username = ?';
-const SAVE_FAVORITO = 'INSERT INTO favoritos VALUES (?, ?)';
-const DELETE_FAVORITO = 'DELETE FROM favoritos WHERE idememe = ? AND username = ?';
+const GET_COMENTARIOS_BY_MEME = 'SELECT * FROM comentarios WHERE idmeme = ?';
+const GET_COMENTARIOS_BY_USERNAME = 'SELECT * FROM comentarios WHERE username = ?';
+const SAVE_COMENTARIO = 'INSERT INTO comentarios VALUES (?, ?, ?)';
+const DELETE_COMENTARIO = 'DELETE FROM comentarios WHERE idmeme = ? AND username = ? AND comentario = ?';
 
-class Favoritos {
-    constructor(idmeme, username) {
+class Comentarios {
+    constructor(idmeme, username, comentario) {
         this.idmeme = idmeme;
         this.username = username;
+        this.comentario = comentario;
     }
 
-    //obtener todos los favoritos de ese usuario
-    static getAllFavoritosByUser(username) {
+    //obtener todos los comentarios de ese usuario
+    static getAllComentariosByUser(username) {
         return new Promise((resolve, reject) => {
-            db.query(GET_FAVORITOS_BY_USERNAME, [username], (err, results) => {
+            db.query(GET_COMENTARIOS_BY_USERNAME, [username], (err, results) => {
                 if (err) {
                     reject(err)
-                } else if (result[0] === undefined) {
-                    resolve('No has guardado memes en favoritos')
+                } else if (results[0] === undefined) {
+                    resolve('No has hecho ningun comentario')
                 } else {
-                    const favoritos = results.map((result) => {
-                        const { idmeme, username } = result;
-                        return new Favoritos(idmeme, username)
+                    const comentarios = results.map((result) => {
+                        const { idmeme, username, comentario } = result;
+                        return new Comentarios(idmeme, username, comentario)
                     });
-                    resolve(favoritos)
+                    resolve(comentarios)
                 }
             });
         });
     }
 
-    //obtener todos los favoritos de ese meme
-    static getAllFavoritosByMeme(idmeme) {
+    //obtener todos los comentarios de ese meme
+    static getAllComentariosByMeme(idmeme) {
         return new Promise((resolve, reject) => {
-            db.query(GET_FAVORITOS_BY_MEME, [idmeme], (err, results) => {
+            db.query(GET_COMENTARIOS_BY_MEME, [idmeme], (err, results) => {
                 if (err) {
                     reject(err)
-                } else if (result[0] === undefined) {
-                    resolve('No ha sido guardado por nadie')
+                } else if (results[0] === undefined) {
+                    resolve('No ha sido comentado aun')
                 } else {
-                    const favoritos = results.map((result) => {
-                        const { idmeme, username } = result;
-                        return new Favoritos(idmeme, username)
+                    const comentarios = results.map((result) => {
+                        const { idmeme, username, comentario } = result;
+                        return new Comentarios(idmeme, username, comentario)
                     });
-                    resolve(favoritos)
+                    resolve(comentarios)
                 }
             });
         });
     }
 
-    //quitar un meme de favoritos segun un usuario
-    static deleteFavoritoById(id, username) {
+    //quitar un comentario segun un usuario
+    static deleteComentarioById(id, username, comentario) {
         return new Promise((resolve, reject) => {
-            db.query(DELETE_FAVORITO, [id, username], (error, result) => {
+            db.query(DELETE_COMENTARIO, [id, username, comentario], (error, result) => {
                 if (error) {
                     reject(error)
                 } else {
-                    resolve()
+                    resolve(null)
                 }
             });
         });
     }
 
-    //guardar un meme como favorito para un usuario
+    //guardar un comentario hecho por un usuario
     save() {
-        const { idmeme, username } = this;
+        const { idmeme, username, comentario } = this;
         return new Promise((resolve, reject) => {
-            db.query(SAVE_FAVORITO, [idmeme, username], (err, resp, fields) => {
+            db.query(SAVE_COMENTARIO, [idmeme, username, comentario], (err, resp, fields) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -81,4 +82,4 @@ class Favoritos {
     }
 }
 
-module.exports = Favoritos;
+module.exports = Comentarios;

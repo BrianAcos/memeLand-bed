@@ -34,10 +34,10 @@ CREATE TABLE memes(
     );
 
 CREATE TABLE comentarios(
-    comentario VARCHAR(400) NOT NULL, 
     idmeme INTEGER,
     username VARCHAR(45),
-    PRIMARY KEY (idmeme, username),
+    comentario VARCHAR(400) NOT NULL,
+    PRIMARY KEY (idmeme, username, comentario),
     CONSTRAINT fk_comentario_meme
     FOREIGN KEY (idmeme)
     REFERENCES memeland.memes(idmeme),
@@ -46,14 +46,27 @@ CREATE TABLE comentarios(
     REFERENCES memeland.users(username)
     );
 
-CREATE TABLE guardados(
+CREATE TABLE favoritos(
     idmeme INTEGER,
     username VARCHAR(45),
     PRIMARY KEY (idmeme, username),
-    CONSTRAINT fk_guardado_meme
+    CONSTRAINT fk_favorito_meme
     FOREIGN KEY (idmeme)
     REFERENCES memeland.memes(idmeme),
-    CONSTRAINT fk_guardado_user
+    CONSTRAINT fk_favorito_user
+    FOREIGN KEY (username)
+    REFERENCES memeland.users(username)
+    );
+
+CREATE TABLE puntajes(
+    idmeme INTEGER,
+    username VARCHAR(45),
+    puntaje INTEGER NOT NULL,
+    PRIMARY KEY (idmeme, username),
+    CONSTRAINT fk_puntaje_meme
+    FOREIGN KEY (idmeme)
+    REFERENCES memeland.memes(idmeme),
+    CONSTRAINT fk_puntaje_user
     FOREIGN KEY (username)
     REFERENCES memeland.users(username)
     );

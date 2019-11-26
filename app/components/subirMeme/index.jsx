@@ -8,50 +8,19 @@ class SubirMeme extends React.Component {
         }
     }
 
-    capturarTitulo (e) {
-        this.setState({
-            titulo: e.target.value
-        });
-    }
-
-    capturarImagen (e) {
-        this.setState({
-            foto: e.target.value
-        });
-    }
-
-    capturarCategoria (e) {
-        this.setState({
-            categorias: e.target.value
-        });
-    }
-
-    capturarFecha (e) {
-        this.setState({
-            fecha: e.target.value
-        });
-    }
-
-    mandarCambios (e) {
-        this.props.subirMeme ({
-            titulo: this.state.titulo,
-            foto: this.state.foto,
-            categorias: this.state.categorias,
-            fecha: this.state.fecha
-        });
-        this.setState({
-            titulo: ''
-        });
-        console.log(this.state);
-    }
-
     render() {
         return (
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col mr-auto ml-auto">
-                        <form onSubmit={this.handleSubmit} className="newMeme" action="http://localhost:3001/api/memes" method="post" encType="multipart/form-data">
-                            <h1>Subí un MEME:</h1>
+            <div className="modal fade" id="subirMeme" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalCenterTitle">Subí tu Meme</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body mr-auto ml-auto">
+                            <form className="subirMeme" action="http://localhost:3001/api/memes" method="post" encType="multipart/form-data">
                             <label htmlFor="titulo"><span>Titulo:</span></label>
                             <input name="titulo" onChange={this.capturarTitulo} required type="text" id="titulo" placeholder="Título para el meme"></input>
                             <br></br>
@@ -70,7 +39,8 @@ class SubirMeme extends React.Component {
                             </select>
                             <br></br>
                             <button className="subir" type="submit" onClick={this.mandarCambios} >Subir Meme</button>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

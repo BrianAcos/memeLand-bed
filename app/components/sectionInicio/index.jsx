@@ -1,6 +1,6 @@
 import React from 'react';
-import Tarjeta from '../components/tarjeta';
-import Filtros from '../components/filtros';
+import Tarjeta from '../tarjeta';
+import Filtros from '../filtros';
 
 class Inicio extends React.Component {
     render() {

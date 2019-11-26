@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Favoritos = require('../../models/favoritos');
+const Puntajes = require('../../models/puntajes');
 const bodyParser = require('body-parser');
 const express = require('express')
 const app = express();
@@ -8,45 +8,45 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//obtener todos los memes guardados de ese usuario
+//obtener todos los puntos que dio ese usuario
 router.get('/users/:username', (req, res, next) => {
-    Favoritos.getAllFavoritosByUser(req.params.username)
+    Puntajes.getAllPuntajesByUser(req.params.username)
         .then((fav) => {
-            res.send(Favoritos.convertJSON(fav))
+            res.send(Puntajes.convertJSON(fav))
         })
         .catch((error) => {
             next(error);
         })
 });
 
-//obtener todos los usuarios que guardaron ese meme
+//obtener todos puntos de ese meme
 router.get('/memes/:idmeme', (req, res, next) => {
-    Favoritos.getAllFavoritosByMeme(req.params.idmeme)
+    Puntajes.getAllPuntajesByMeme(req.params.idmeme)
         .then((fav) => {
-            res.send(Favoritos.convertJSON(fav))
+            res.send(Puntajes.convertJSON(fav))
         })
         .catch((error) => {
             next(error);
         })
 });
 
-// guardar meme en favoritos
+// guardar puntaje 
 router.post('/', (req, res, next) => {
-    const newFav = new Favoritos(req.body.idmeme, req.body.username);
-    newFav.save()
+    const newComent = new Puntajes(req.body.idmeme, req.body.username, req.body.puntaje);
+    newComent.save()
         .then((() => {
-            res.send(`${req.body.username} felicitaciones! has agregado un nevo meme a favoritos`);
+            res.send(`${req.body.username} diste una puntuacion`);
         }))
         .catch((err) => {
             next(err);
         })
 });
 
-// borrar un meme en favoritos
+// borrar puntaje
 router.delete('/', (req, res, next) => {
-    Favoritos.deleteFavoritoById(req.body.idmeme, req.body.username)
+    Puntajes.deletePuntajeById(req.body.idmeme, req.body.username)
         .then(() => {
-            res.send(`El meme ${req.body.idmeme} se quito de favorios`)
+            res.send(`${req.body.username} borraste una puntuacion`)
         })
         .catch((err) => {
             next(err)
