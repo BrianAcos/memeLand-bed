@@ -1,0 +1,97 @@
+.tarjeta {
+    display: flexbox;
+    border: 1px solid black;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px blue;
+  }
+
+.tarjeta .row {
+  margin: 0px;
+}
+
+.col-12 {
+  padding: 10px;
+}
+
+  .usuario img {
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    transition: all 1s ease-out;
+  }
+
+  .meme {
+    display: block;
+    padding: 10px;
+  }
+
+  .meme img {
+    border-radius: 5px;
+    width: 100%;
+    margin: auto;
+  }
+
+  .botones img {
+    margin: 10px auto;
+    width: 50px;
+    height: 50px;
+    transition: all 1s ease-out;
+  }
+
+  .botones a {
+    margin: auto;
+  }
+
+  .usuario ul {
+    transition: all 1s ease-out;
+    word-break: break-all;
+    width: 80%;
+  }
+
+  @media all and (max-width: 400px) {
+    .botones img {
+      width: 30px;
+      height: 30px;
+      transition: all 1s ease-out;
+    }
+    .usuario img {
+      width: 30px;
+      height: 30px;
+      transition: all 1s ease-out;
+    }
+    .usuario ul {
+      padding: 0px;
+      font-size: 13px;
+      transition: all 1s ease-out;
+    }
+  }
+
+  #puntuacion {
+    margin: 5px;
+  }
+  
+  .puntuacion input[type="radio"] {
+    display: none;
+  }
+  
+  .puntuacion {
+    font-size: 30px;
+    padding: 0px 10px;
+  }
+
+  .puntuacion label {
+    color: grey;
+  }
+  
+  .puntuacion {
+    direction: rtl;
+  }
+  
+  .puntuacion label:hover,
+  .puntuacion label:hover ~ label {
+    color: orange;
+  }
+  
+  .puntuacion input[type="radio"]:checked ~ label {
+    color: orange;
+  }

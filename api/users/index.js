@@ -43,7 +43,8 @@ router.post('/', upload.single('avatar'), (req, res, next) => {
     const email = req.body.email;
     const sexo = req.body.sexo;
     const birthday = req.body.birthday;
-    const avatar = `users/${req.file.filename}`
+    const avatar = null;
+    // const avatar = `users/${req.file.filename}`
     const sobreMi = req.body.sobremi
     bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
         if (err) {

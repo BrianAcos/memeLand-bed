@@ -1,0 +1,40 @@
+.newMeme label {
+    width: 200px;
+    text-align: right;
+    padding: 10px;
+    font-size: 21px;
+    font-weight: bold;
+    text-shadow: 2px 2px #ff0000;
+}
+
+.newMeme span {
+    background: white;
+    border-radius: 10px;
+}
+
+.newMeme input, .newMeme select {
+    width: 151px;
+    border-radius: 5px;
+}
+
+.newMeme {
+    text-align: center;
+}
+
+.newMeme {
+    background-repeat: no-repeat;
+    background-image: url(/assets/newMeme.jpg);
+    background-position: center;
+    height: 960px;
+}
+
+.subir {
+  margin: 10px 5px;
+}
+  
+@media all and (max-width: 380px) {
+    .newMeme label {
+        text-align: center;
+        padding: 20px 0px 0px 0px;
+    }
+}

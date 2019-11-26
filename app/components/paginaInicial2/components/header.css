@@ -1,0 +1,48 @@
+nav {
+    background: linear-gradient(to right, #2980b9, #6dd5fa);
+  }
+
+  .ico {
+    width: 100px;
+  }
+
+  .nav-link {
+    margin: 0px 20px;
+    font-variant: small-caps;
+    font-size: 20px;
+  }
+
+  nav li, .nav-link  {
+    transition: all 1s ease-out;
+  }
+
+  @media all and (max-width: 700px) {
+    nav li:first-child   {
+      position: absolute;
+      margin-top: -25px;
+      transition: all 1s ease-out;
+    }
+
+    nav li:last-child   {
+      position: absolute;
+      margin-top: 25px;
+      transition: all 1s ease-out;
+    }
+  }
+
+  .nav-link {
+    padding: 0px;
+  }
+
+  @media all and (max-width: 400px) {
+    .nav-link {
+      font-size: 15px;
+      margin: 0px;
+      padding: 0px;
+      transition: all 1s ease-out;
+    }
+    .navbar-nav {
+      padding: 0px;
+    }
+
+  }

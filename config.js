@@ -11,5 +11,5 @@ if (environment === 'production') {
 module.exports = {
     ...environmentConfigis,
     PORT: 3001,
-    static: './public',
+    static: './dist',
 };

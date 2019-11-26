@@ -1,0 +1,42 @@
+.filtros {
+    margin-left: 0px;
+    transition: all 1s ease-out;
+  }
+
+.form-group {
+  padding-top: 20px;
+}
+
+.otrosFiltros li {
+  padding: 5px;
+  font-weight: bold;
+  font-size: 18px;
+  text-shadow: 2px 2px #0673FA;
+}
+
+.buttonFiltros {
+  position: absolute;
+  margin-left: 140px;
+}
+
+.desactivado {
+  color: gray;
+  pointer-events: none;
+  display: table-row;
+}
+
+.hidden {
+  margin-left: -150px;
+}
+
+@media all and (max-width: 700px) {
+  .filtros {
+      margin-left: -150px;
+      transition: all 1s ease-out;
+  }
+  .show {
+    margin-left: 0px;
+    position: fixed;
+    z-index: 2;
+  }
+}
