@@ -2,14 +2,35 @@ const db = require('../services/db-connection');
 
 const GET_PUNTAJES_BY_MEME = 'SELECT * FROM puntajes WHERE idmeme = ?';
 const GET_PUNTAJES_BY_USERNAME = 'SELECT * FROM puntajes WHERE username = ?';
-const SAVE_PUNTAJE = 'INSERT INTO puntajes VALUES (?, ?, ?)';
+const GET_PUNTAJES_BY_CREADOR = 'SELECT * FROM puntajes WHERE creador = ?';
+const SAVE_PUNTAJE = 'INSERT INTO puntajes VALUES (?, ?, ?, ?)';
 const DELETE_PUNTAJE = 'DELETE FROM puntajes WHERE idmeme = ? AND username = ?';
 
 class Puntajes {
-    constructor(idmeme, username, puntaje) {
+    constructor(idmeme, username, puntaje, creador) {
         this.idmeme = idmeme;
         this.username = username;
         this.puntaje = puntaje;
+        this.creador = creador;
+    }
+
+    //obtener todos los puntos que ha recibido ese usuario
+    static getAllPuntajesByCreador(creador) {
+        return new Promise((resolve, reject) => {
+            db.query(GET_PUNTAJES_BY_CREADOR, [creador], (err, results) => {
+                if (err) {
+                    reject(err)
+                } else if (results[0] === undefined) {
+                    resolve('No has recibido puntos aun')
+                } else {
+                    const puntajes = results.map((result) => {
+                        const { idmeme, username, puntaje, creador } = result;
+                        return new Puntajes(idmeme, username, puntaje, creador)
+                    });
+                    resolve(puntajes)
+                }
+            });
+        });
     }
 
     //obtener todos los puntos que ha dado ese usuario
@@ -22,8 +43,8 @@ class Puntajes {
                     resolve('No has puntuado aun')
                 } else {
                     const puntajes = results.map((result) => {
-                        const { idmeme, username, puntaje } = result;
-                        return new Puntajes(idmeme, username, puntaje)
+                        const { idmeme, username, puntaje, creador } = result;
+                        return new Puntajes(idmeme, username, puntaje, creador)
                     });
                     resolve(puntajes)
                 }
@@ -41,8 +62,8 @@ class Puntajes {
                     resolve('No ha sido comentado aun')
                 } else {
                     const puntajes = results.map((result) => {
-                        const { idmeme, username, puntaje } = result;
-                        return new Puntajes(idmeme, username, puntaje)
+                        const { idmeme, username, puntaje, creador} = result;
+                        return new Puntajes(idmeme, username, puntaje, creador)
                     });
                     resolve(puntajes)
                 }
@@ -65,9 +86,9 @@ class Puntajes {
 
     //guardar un puntaje hecho por un usuario
     save() {
-        const { idmeme, username, puntaje } = this;
+        const { idmeme, username, puntaje, creador } = this;
         return new Promise((resolve, reject) => {
-            db.query(SAVE_PUNTAJE, [idmeme, username, puntaje], (err, resp, fields) => {
+            db.query(SAVE_PUNTAJE, [idmeme, username, puntaje, creador], (err, resp, fields) => {
                 if (err) {
                     reject(err)
                 } else {

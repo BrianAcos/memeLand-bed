@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //configurar multer
-const upload = multer({ dest: 'public/memes/' });
+const upload = multer({ dest: 'dist/memes/' });
 
 //obtener 1 meme
 router.get('/:id', (req, res, next) => {
@@ -40,7 +40,7 @@ router.post('/', upload.single('imagen'), (req, res, next) => {
     const titulo = req.body.titulo;
     const categoria = req.body.categoria;
     const imagen = `memes/${req.file.filename}`
-    const newMeme = new Memes(0, user, titulo, tags, imagen, categoria, "NOW()", null, 0, 0, 0);
+    const newMeme = new Memes(0, user, titulo, tags, imagen, categoria, "NOW()", null, 0);
     newMeme.save()
         .then((() => {
             res.send(`${user} felicitaciones! has agregado un nevo meme`);
@@ -70,19 +70,6 @@ router.put('/:id', (req, res, next) => {
     Memes.modifyMemeById(id, titulo, tags, categoria)
         .then(() => {
             res.send(`modificaste el meme ${id} con el titulo: ${titulo} tags: ${tags} categoria: ${categoria}`)
-        })
-        .catch((err) => {
-            next(err)
-        })
-});
-
-//agregar puntuacion al usuario
-router.post('/puntuar', (req, res, next) => {
-    const idmeme = req.body.idmeme;
-    const puntos = req.body.puntos;
-    Memes.puntuarMeme(puntos, idmeme)
-        .then(() => {
-            res.send(`se agregaron ${puntos} puntos a ${idmeme}`)
         })
         .catch((err) => {
             next(err)

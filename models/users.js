@@ -2,34 +2,21 @@ const db = require('../services/db-connection');
 
 const GET_USERS = 'SELECT * FROM users';
 const GET_USER_ID = 'SELECT * FROM users WHERE username = ?';
-const SAVE_USERS = 'INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?,0, 0, 0)';
+const SAVE_USERS = 'INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)';
 const DELETE_USER = 'DELETE FROM users WHERE username = ?';
 const MODIFY_USER = 'UPDATE users SET sexo = ?, birthday = ?, avatar = ?, sobremi = ? WHERE username = ?';
-const PUNTUAR_USER = 'UPDATE users SET puntaje = puntaje + ?, votos = votos + 1 WHERE username = ?';
 
 class Users {
-    constructor(username, password, nombre, mail, sexo, birthday, avatar, sobremi, votos, puntaje, administrador) {
+    constructor(username, password, nombre, email, sexo, birthday, avatar, sobremi, administrador) {
         this.username = username;
         this.password = password;
         this.nombre = nombre;
-        this.mail = mail;
+        this.email = email;
         this.sexo = sexo;
         this.birthday = birthday;
         this.avatar = avatar;
         this.sobremi = sobremi;
-        this.votos = votos;
-        this.puntaje = puntaje;
         this.administrador = administrador;
-    }
-
-    static puntuarUser(puntaje, username) {
-        return new Promise((resolve, reject) => {
-            db.query(PUNTUAR_USER, [puntaje, username], (err, result) => {
-                if(err) {
-                    reject(err)
-                } else {resolve(null)}
-            })
-        })
     }
     
     static getUserById(ID) {
@@ -41,7 +28,7 @@ class Users {
                     resolve('404 not found')
                 } else {
                     const user = result[0];
-                    const modelUser = new Users(user.username, user.password, user.nombre, user.mail, user.sexo, user.birthday, user.avatar, user.sobremi, user.votos, user.puntaje, user.administrador);
+                    const modelUser = new Users(user.username, user.password, user.nombre, user.email, user.sexo, user.birthday, user.avatar, user.sobremi, user.administrador);
                     resolve(modelUser); 
                 }
             });
@@ -55,8 +42,8 @@ class Users {
                     reject(err)
                 } else {
                     const users = results.map((result) => {
-                        const { username, password, nombre, mail, sexo, birthday, avatar, sobremi, votos, puntaje, administrador } = result;
-                        return new Users(username, password, nombre, mail, sexo, birthday, avatar, sobremi, votos, puntaje, administrador)
+                        const { username, password, nombre, email, sexo, birthday, avatar, sobremi, administrador } = result;
+                        return new Users(username, password, nombre, email, sexo, birthday, avatar, sobremi, administrador)
                      });
                      resolve(users)
                 }
@@ -64,13 +51,13 @@ class Users {
         });
     }
 
-    static deleteUserById(ID) {
+    static deleteUserById(ID, password) {
         return new Promise((resolve, reject) => {
             db.query(GET_USER_ID, [ID], (error, result) => {
                 if (error) {
                     reject(error)
                 } else if (result[0] === undefined) {
-                    resolve('404 not found')
+                    reject(404)
                 } else {
                     db.query(DELETE_USER, [ID], (err, result) => {
                         if (err) {
@@ -97,9 +84,9 @@ class Users {
     }
 
     save() {
-        const { username, password, nombre, mail, sexo, birthday, avatar, sobremi, votos, puntaje, administrador } = this;
+        const { username, password, nombre, email, sexo, birthday, avatar, sobremi, administrador } = this;
         return new Promise((resolve, reject) => {
-            db.query(SAVE_USERS, [username, password, nombre, mail, sexo, birthday, avatar, sobremi, votos, puntaje, administrador], (err, resp, fields) => {
+            db.query(SAVE_USERS, [username, password, nombre, email, sexo, birthday, avatar, sobremi, administrador], (err, resp, fields) => {
                 if(err) {
                     reject(err)
                 } else {

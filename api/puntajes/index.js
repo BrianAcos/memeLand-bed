@@ -8,6 +8,17 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//obtener todos los puntos que recibio ese usuario
+router.get('/creador/:username', (req, res, next) => {
+    Puntajes.getAllPuntajesByCreador(req.params.username)
+        .then((respuesta) => {
+            res.send(Puntajes.convertJSON(respuesta))
+        })
+        .catch((error) => {
+            next(error);
+        })
+});
+
 //obtener todos los puntos que dio ese usuario
 router.get('/users/:username', (req, res, next) => {
     Puntajes.getAllPuntajesByUser(req.params.username)
@@ -32,13 +43,15 @@ router.get('/memes/:idmeme', (req, res, next) => {
 
 // guardar puntaje 
 router.post('/', (req, res, next) => {
-    const newComent = new Puntajes(req.body.idmeme, req.body.username, req.body.puntaje);
+    const newComent = new Puntajes(req.body.idmeme, req.body.username, req.body.puntaje, req.body.creador);
     newComent.save()
         .then((() => {
             res.send(`${req.body.username} diste una puntuacion`);
         }))
         .catch((err) => {
             res.send('error')
+            console.log(req.body.idmeme, req.body.username, req.body.puntaje, req.body.creador);
+            
         })
 });
 

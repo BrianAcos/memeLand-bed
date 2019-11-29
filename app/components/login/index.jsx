@@ -17,7 +17,7 @@ class Login extends React.Component {
                                 <label htmlFor="username"><span>Nombre de usuario:</span></label>
                                 <input required id="username" name="username"></input><br></br>
                                 <label htmlFor="password"><span>Contraseña:</span></label>
-                                <input required id="password" name="password"></input><br></br>
+                                <input required id="password" type="password" name="password"></input><br></br>
                                 <button type="submit" className="btn btn-primary">Ingresar</button>
                             </form>
                         </div>

@@ -2,6 +2,8 @@ const React = require('react');
 const { Link } = require('react-router-dom');
 const Header = require('../header');
 const SubirMeme = require('../subirMeme');
+const UserData = require('../userData');
+const UserStats = require('../userStats');
 
 class PaginaPerfil extends React.Component {
     constructor(props) {
@@ -9,6 +11,8 @@ class PaginaPerfil extends React.Component {
 
         this.state = {
             user: {},
+            loading: false,
+            error: false,
         }
     }
 
@@ -38,15 +42,10 @@ class PaginaPerfil extends React.Component {
                 <Header />
                 <div className="container-fluid">
                     <div className="row">
-                        {/* <Filtros /> */}
                         <div className="col contenido">
                             <div className="row">
-                                MI PERFIL {this.state.user.username}
-                {/* {
-                  memes.map(meme => (
-                    <Tarjeta key={meme.idmeme} idmeme={meme.idmeme} creador={meme.creador} titulo={meme.titulo} tags={meme.tags} foto={meme.foto} categoria={meme.categoria} fecha={meme.fecha} votos={meme.votos} puntaje={meme.puntaje} />
-                  ))
-                } */}
+                                <UserStats nombre={this.state.user.nombre} birthday={this.state.user.birthday} sexo={this.state.user.sexo} sobremi={this.state.user.sobremi} avatar={this.state.user.avatar} />
+                                {/* <UserData nombre={this.state.user.nombre} birthday={this.state.user.birthday} sexo={this.state.user.sexo} sobremi={this.state.user.sobremi} /> */}
                             </div>
                         </div>
                     </div>

@@ -14,10 +14,10 @@ class Registro extends React.Component {
                         </div>
                         <div className="modal-body mr-auto ml-auto">
                             <form className="registro" action="http://localhost:3001/api/users" method="post" encType="application/x-www-form-urlencoded">
-                                <label  htmlFor="username"><span>Nombre de usuario:</span></label>
-                                <input required id="username" name="username"></input><br></br>
-                                <label htmlFor="password"><span>Contraseña:</span></label>
-                                <input required id="password" name="password"></input><br></br>
+                                <label  htmlFor="usernameRegistro"><span>Nombre de usuario:</span></label>
+                                <input required id="usernameRegistro" name="username"></input><br></br>
+                                <label htmlFor="passwordRegistro"><span>Contraseña:</span></label>
+                                <input required id="passwordRegistro" type="password" name="password"></input><br></br>
                                 <label htmlFor="email"><span>Email:</span></label>
                                 <input required id="email" name="email" type="email"></input><br></br>
                                 <label htmlFor="nombre"><span>Nombre:</span></label>

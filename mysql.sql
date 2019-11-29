@@ -11,7 +11,6 @@ CREATE TABLE users(
     birthday DATE NULL,
     avatar VARCHAR(100) NULL,
     sobremi VARCHAR(500) NULL,
-    puntaje INTEGER DEFAULT 0,
     administrador BOOLEAN DEFAULT false,
     PRIMARY KEY (username)
     );
@@ -25,8 +24,6 @@ CREATE TABLE memes(
     categoria VARCHAR(45) NOT NULL,
     fecha DATETIME,
     aprobacion VARCHAR(45) NULL,
-    votos INTEGER DEFAULT 0,
-    puntaje INTEGER DEFAULT 0,
     PRIMARY KEY (idmeme),
     CONSTRAINT fk_creador
     FOREIGN KEY (creador)
@@ -62,6 +59,7 @@ CREATE TABLE puntajes(
     idmeme INTEGER,
     username VARCHAR(45),
     puntaje INTEGER NOT NULL,
+    creador VARCHAR(45) NOT NULL,
     PRIMARY KEY (idmeme, username),
     CONSTRAINT fk_puntaje_meme
     FOREIGN KEY (idmeme)

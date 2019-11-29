@@ -19,16 +19,12 @@ class Header extends React.Component {
           </li>
         </ul>
         <ul>
-          {this.props.session === reqSessionName ?
             <li>
+              <Link to={`perfil/${reqSessionName}`} >PERFIL</Link>
               <a href="#registro" data-toggle="modal" data-target="#registro">REGISTRARSE</a><br></br>
               <a href="#login" data-toggle="modal" data-target="#sesion">INICIAR SESION</a><br></br>
               <a href="#contacto" data-toggle="modal" data-target="#contacto">CONTACTO(FOOTER)</a>
             </li>
-            :
-            <li>
-              <Link to={`perfil/${reqSessionName}`} >PERFIL</Link>
-            </li>}
         </ul>
       </nav>
     );

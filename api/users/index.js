@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //configurar multer
-const upload = multer({ dest: 'public/users/' });
+const upload = multer({ dest: 'dist/users/' });
 
 //obtener un user
 router.get('/:id', (req, res, next) => {
@@ -36,7 +36,7 @@ router.get('/', (req, res, next) => Users.getAllUsers()
         next(error)
     }));
 
-// guardar user (nombre de usuario, contraseña, nombre, email, sexo, cumpleaños, avatar, sobremi)
+// guardar user (nombre de usuario, contraseña, nombre, email)
 router.post('/', (req, res, next) => {
     const username = req.body.username;
     const nombre = req.body.nombre;
@@ -45,7 +45,7 @@ router.post('/', (req, res, next) => {
         if (err) {
             next(err)
         } else {
-            const newUser = new Users(username, hash, nombre, email, null, null, null, null, 0, 0);
+            const newUser = new Users(username, hash, nombre, email, null, null, null, null);
             newUser.save()
                 .then((() => {
                     res.send(`Felicidades ${req.body.username} ya eres parte de MemeLand!`);
@@ -61,12 +61,16 @@ router.post('/', (req, res, next) => {
 
 // borrar un user
 router.delete('/:id', (req, res, next) => {
-    Users.deleteUserById(req.params.id)
+    Users.deleteUserById(req.params.id, hash)
         .then(() => {
-            res.send(`El usuario ${req.params.id} ha sido borrado`)
+            res.send(`El usuario ${req.params.id} ha sido borrado`);
         })
         .catch((err) => {
-            next(err)
+            if (err === 404) {
+                res.send('404 not found');
+            } else {
+                next(err);
+            }
         })
 });
 
@@ -80,19 +84,6 @@ router.put('/:id', upload.single('avatar'), (req, res, next) => {
     Users.modifyUserById(id, sexo, birthday, avatar, sobremi)
         .then(() => {
             res.send(`${id} modificaste tu sexo a ${sexo}, tu cumpleaños a ${birthday} y sobreti ${sobremi} `)
-        })
-        .catch((err) => {
-            next(err)
-        })
-});
-
-//agregar puntuacion al usuario
-router.post('/puntuar', (req, res, next) => {
-    const username = req.body.username;
-    const puntos = req.body.puntos;
-    Users.puntuarUser(puntos, username)
-        .then(() => {
-            res.send(`se agregaron ${puntos} puntos a ${username}`)
         })
         .catch((err) => {
             next(err)
