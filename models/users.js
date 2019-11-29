@@ -4,7 +4,8 @@ const GET_USERS = 'SELECT * FROM users';
 const GET_USER_ID = 'SELECT * FROM users WHERE username = ?';
 const SAVE_USERS = 'INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?,0, 0, 0)';
 const DELETE_USER = 'DELETE FROM users WHERE username = ?';
-const MODIFY_USER = 'UPDATE users SET sexo = ?, birthday = ?, sobremi = ? WHERE username = ?';
+const MODIFY_USER = 'UPDATE users SET sexo = ?, birthday = ?, avatar = ?, sobremi = ? WHERE username = ?';
+const PUNTUAR_USER = 'UPDATE users SET puntaje = puntaje + ?, votos = votos + 1 WHERE username = ?';
 
 class Users {
     constructor(username, password, nombre, mail, sexo, birthday, avatar, sobremi, votos, puntaje, administrador) {
@@ -21,6 +22,16 @@ class Users {
         this.administrador = administrador;
     }
 
+    static puntuarUser(puntaje, username) {
+        return new Promise((resolve, reject) => {
+            db.query(PUNTUAR_USER, [puntaje, username], (err, result) => {
+                if(err) {
+                    reject(err)
+                } else {resolve(null)}
+            })
+        })
+    }
+    
     static getUserById(ID) {
         return new Promise((resolve, reject) => {
             db.query(GET_USER_ID, [ID], (err, result) => {
@@ -73,9 +84,9 @@ class Users {
         });
     }
 
-    static modifyUserById(id, sexo, birthday, sobremi) {
+    static modifyUserById(id, sexo, birthday, avatar, sobremi) {
         return new Promise((resolve, reject) => {
-            db.query(MODIFY_USER, [sexo, birthday, sobremi, id], (err, result) =>  {
+            db.query(MODIFY_USER, [sexo, birthday, avatar, sobremi, id], (err, result) =>  {
                 if (err) {
                     reject(err);
                 } else {

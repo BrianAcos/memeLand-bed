@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 
 class SubirMeme extends React.Component {
     constructor(props) {
@@ -48,4 +48,4 @@ class SubirMeme extends React.Component {
     }
 }
 
-export default SubirMeme;
+module.exports = SubirMeme;

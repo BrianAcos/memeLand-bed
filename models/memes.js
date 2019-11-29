@@ -5,6 +5,7 @@ const GET_MEME_ID = 'SELECT * FROM memes WHERE idmeme = ?';
 const SAVE_MEMES = 'INSERT INTO memes VALUES (0, ?, ?, ?, ?, ?, NOW(), null, 0, 0)';
 const DELETE_MEME = 'DELETE FROM memes WHERE idmeme = ?';
 const MODIFY_MEME = 'UPDATE memes SET titulo = ?, tags = ?, categoria = ? WHERE idmeme = ?';
+const PUNTUAR_MEME = 'UPDATE memes SET puntaje = puntaje + ?, votos = votos + 1 WHERE idmeme = ?';
 
 class Memes {
     constructor(idmeme, creador, titulo, tags, foto, categoria, fecha, aprobacion, votos, puntaje) {
@@ -18,6 +19,16 @@ class Memes {
         this.aprobacion = aprobacion;
         this.votos = votos;
         this.puntaje = puntaje;
+    }
+
+    static puntuarMeme(puntaje, idmeme) {
+        return new Promise((resolve, reject) => {
+            db.query(PUNTUAR_MEME, [puntaje, idmeme], (err, result) => {
+                if(err) {
+                    reject(err)
+                } else {resolve(null)}
+            })
+        })
     }
 
     static getMemeById(ID) {

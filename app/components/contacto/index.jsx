@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 
 class Contacto extends React.Component {
     render() {
@@ -26,4 +26,4 @@ class Contacto extends React.Component {
     }
 }
 
-export default Contacto;
+module.exports = Contacto;

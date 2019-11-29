@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 
 class Filtros extends React.Component {
     constructor(props) {
@@ -6,36 +6,22 @@ class Filtros extends React.Component {
 
         this.state = {
             filtros: false,
-            categorias: null
         }
 
         this.changeState = this.changeState.bind(this);
     }
 
-    changeState () {
+    changeState() {
         this.setState({
-            filtros: !this.state.filtros
-        });
-        console.log(this.state.filtros);
-
-    }
-
-    cambiarCategorias (e) {
-        this.setState({ categorias: e.target.value });
-    }
-
-    mandarCategorias  () {
-        this.props.setCategoria({
-            categorias: this.state.categorias
+            filtros: !this.state.filtros,
         });
     }
-
 
     render() {
         return (
             <div className={"col-auto filtros " + (this.state.filtros ? "show" : "hidden")}>
                 <div className="form-group">
-                    <button className="buttonFiltros" onClick={this.changeState}>F<br></br>I<br></br>L<br></br>T<br></br>R<br></br>O<br></br>S<br></br>></button>
+                    <button onClick={this.changeState} className="buttonFiltros" >F<br></br>I<br></br>L<br></br>T<br></br>R<br></br>O<br></br>S<br></br>></button>
                     <select onChange={this.cambiarCategorias} onClick={this.mandarCategorias} className="custom-select custom-select-sm">
                         <option defaultValue="all">Categorias</option>
                         <option value="acertijos">Acertijos</option>
@@ -47,14 +33,14 @@ class Filtros extends React.Component {
                     </select>
                 </div>
                 <ul className="otrosFiltros">
-                <a className="desactivado" href="#???"><li>TOP MEMES</li></a>
-                <a className="desactivado" href="#???"><li>Recientes</li></a>
-                <a className="desactivado" href="#???"><li>Aleatorios</li></a>
-                <a href="#Favoritos" onClick={this.props.goToFavoritos} ><li>Favoritos</li></a>
+                    <a className="desactivado" href="#???"><li>TOP MEMES</li></a>
+                    <a className="desactivado" href="#???"><li>Recientes</li></a>
+                    <a className="desactivado" href="#???"><li>Aleatorios</li></a>
+                    <a href="#Favoritos" onClick={this.props.goToFavoritos} ><li>Favoritos</li></a>
                 </ul>
             </div>
         );
     }
-}
+};
 
-export default Filtros;
+module.exports = Filtros;

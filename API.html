@@ -1,0 +1,234 @@
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>API REST</title>
+</head>
+
+<body>
+    <style>
+        .padre {
+            display: flex;
+        }
+
+        .notas tr {
+            display: block;
+            width: 250px;
+            text-align: left;
+            border-bottom: 1px solid black
+        }
+
+        .notas {
+            border: 1px solid black;
+            margin-top: 2px;
+        }
+
+        .api tr {
+            display: block;
+            border: 1px solid black;
+            padding: 5px;
+            width: 750px;
+        }
+
+        span {
+            font-weight: bold;
+            background-color: yellow;
+        }
+
+        tr :first-child {
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .api {
+            padding: 0px 20px 20px 0px;
+        }
+    </style>
+    <div class="padre">
+        <div>
+            <table class="api">
+                <tr>
+                    <th><span>API MEMES => http://localhost:3001/api/memes </span></th>
+                </tr>
+                <tr>
+                    <td><span>GET</span></td>
+                    <td>
+                        <span>/ => </span> todos los memes [los primeros 20?] <br>
+                        <span>/:id => </span>ese meme
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>POST</span></td>
+                    <td>
+                        <span>/ => </span>agrega meme con <span>body('titulo', 'tags', categoria, imagen)</span> <br>
+                        [body(user), agregar ese meme fuera de la carpeta public, encriptar email?] <br>
+                        "agrega user pero siempre a brian" "se autogenera id, fecha actual, aprobacion, votos, puntaje"
+                        <br>
+                        <span>/puntuar => </span>agrega puntuacion con <span>body(username, puntos)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>PUT</span></td>
+                    <td>
+                        <span>/:id => </span>modifica meme con <span>body('titulo', 'tags', categoria)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>DELETE</span></td>
+                    <td>
+                        <span>/:id => </span>borra ese meme [confirmar password?]
+                    </td>
+                </tr>
+            </table>
+            <table class="api">
+                <tr>
+                    <th><span>API USERS => http://localhost:3001/api/users</span></th>
+                </tr>
+                <tr>
+                    <td><span>GET</span></td>
+                    <td>
+                        <span>/ => </span> todos los usuarios [deberia existir?] <br>
+                        <span>/:id => </span>un solo usuario
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>POST</span></td>
+                    <td>
+                        <span>/ => </span>agrega usuario con <span>body(username, password, nombre, email, 'sexo', 'birthday', 'sobremi')</span><br>
+                        [agregar sexo, birthday, sobremi y avatar solo en el put?] <br>
+                        "contraseña encriptada, puntaje 0, y sin administrador" <br>
+                        <span>/puntuar => </span>agrega puntuacion con <span>body(username, puntos)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>PUT</span></td>
+                    <td>
+                        <span>/:id => </span>modifica usuario <span>body(sexo, birthday, sobremi)</span> [avatar]
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>DELETE</span></td>
+                    <td>
+                        <span>/:id => </span>borra usuario [confirmar password?]
+                    </td>
+                </tr>
+            </table>
+            <table class="api">
+                <tr>
+                    <th><span>API COMENTARIOS => http://localhost:3001/api/comentarios</span></th>
+                </tr>
+                <tr>
+                    <td><span>GET</span></td>
+                    <td>
+                        <span>/users/:username => </span> todos los comentarios de ese usuario<br>
+                        <span>/memes/:idmeme => </span> todos los comentarios de ese meme<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>POST</span></td>
+                    <td>
+                        <span>/ => </span>agrega un comentario con <span>body(username, idmeme, comentario)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>DELETE</span></td>
+                    <td>
+                        <span>/ => </span>borra comentario con <span>body(username, idmeme, comentario)</span>
+                    </td>
+                </tr>
+            </table>
+            <table class="api">
+                <tr>
+                    <th><span>API FAVORITOS => http://localhost:3001/api/favoritos</span></th>
+                </tr>
+                <tr>
+                    <td><span>GET</span></td>
+                    <td>
+                        <span>/users/:username => </span> todos los memes en favoritos de ese usuario<br>
+                        <span>/memes/:idmeme => </span> todos los usuarios que agregaron a favoritos ese meme<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>POST</span></td>
+                    <td>
+                        <span>/ => </span>agrega a favoritos con <span>body(username, idmeme)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>DELETE</span></td>
+                    <td>
+                        <span>/ => </span>borra de favoritos con <span>body(username, idmeme, comentario)</span>
+                    </td>
+                </tr>
+            </table>
+            <table class="api">
+                <tr>
+                    <th><span>API PUNTAJES => http://localhost:3001/api/puntajes</span></th>
+                </tr>
+                <tr>
+                    <td><span>GET</span></td>
+                    <td>
+                        <span>/users/:username => </span> todos los puntos que dio ese usuario<br>
+                        <span>/memes/:idmeme => </span> todos los puntos de ese meme<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>POST</span></td>
+                    <td>
+                        <span>/ => </span>agrega un puntaje con <span>body(username, idmeme, puntaje)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span>DELETE</span></td>
+                    <td>
+                        <span>/ => </span>borra puntaje con <span>body(username, idmeme)</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="div-notas">
+            <table class="notas">
+                <tr>
+                    <th>
+                        <span>Notas</span>
+                    </th>
+                </tr>
+                <tr>
+                    <td><span>?</span> => no estoy seguro</td>
+                </tr>
+                <tr>
+                    <td><span>[]</span> => lo ideal</td>
+                </tr>
+                <tr>
+                    <td><span>" "</span> => aclaraciones</td>
+                </tr>
+                <tr>
+                    <td><span>' '</span> => no obligatorio</td>
+                </tr>
+            </table>
+            <table class="notas">
+                <tr>
+                    <th>
+                        <span>DUDAS</span>
+                    </th>
+                </tr>
+                <tr>
+                    <td>-como hago para saber que meme fue el mas votado ese dia?</td>
+                </tr>
+                <tr>
+                    <td>-como hacer el server side rendering de cada uno de los memes o usuario? .map?</td>
+                </tr>
+                <tr>
+                    <td>hacer que el usuario este autenticado para acceder a ciertos recursos</td>
+
+                </tr>
+                <tr>
+                    <td>-redux?</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

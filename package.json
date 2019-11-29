@@ -4,7 +4,8 @@
   "description": "backend memeland",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/**/*.spec.js",
+    "coverage": "nyc --reporter=lcov --reporter=text-summary npm run test",
+    "test": "mocha --file ./test/setup.js test/**/*.spec.js",
     "dev": "nodemon index.js",
     "start": "node index.js",
     "build": "webpack --mode production",
@@ -46,9 +47,11 @@
     "mocha": "^6.2.2",
     "node-sass": "^4.13.0",
     "nodemon": "^1.19.4",
+    "nyc": "^14.1.1",
     "sass-loader": "^8.0.0",
     "sinon": "^7.5.0",
     "source-map-loader": "^0.2.4",
+    "supertest": "^4.0.2",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   }

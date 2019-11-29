@@ -1,39 +1,38 @@
-import React from 'react';
+const React = require('react');
+const { Link } = require('react-router-dom');
 
 class Header extends React.Component {
   render() {
+    const reqSessionName = 'Brian';
     return (
       <nav className="navbar navbar-expand">
-        <a className="navbar-brand" href="#Inicio" onClick={this.props.goToInicio}><img src="assets/ico.png" alt="ico" className="ico" /></a>
+        <Link to={'/'} className="navbar-brand" ><img src="assets/ico.png" alt="ico" className="ico" /></Link>
         <ul className="navbar-nav mr-auto ml-auto">
           <li className="nav-item">
-            <a className="nav-link" href="#Inicio" onClick={this.props.goToInicio}>Inicio</a>
+            <Link to={'/'} className="nav-link">Inicio</Link>
           </li>
           <li className="nav-item">
-            <a href="#subirMeme" data-toggle="modal" data-target="#subirMeme">Subir MEME</a>
-            {/* <a className="nav-link" href="#Subir-Meme" onClick={this.cambiarSeccion(seccion)}>Subir MEME</a> */}
+            <a className="nav-link" href='#subir' data-toggle="modal" data-target="#subirMeme">Subir MEME</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#Favoritos" onClick={this.props.goToFavoritos}>Favoritos</a>
+            <Link to={`favoritos/${reqSessionName}`} className="nav-link">Favoritos</Link>
           </li>
         </ul>
         <ul>
-          {this.props.session === '' ?
+          {this.props.session === reqSessionName ?
             <li>
               <a href="#registro" data-toggle="modal" data-target="#registro">REGISTRARSE</a><br></br>
-              <a href="#sesion" data-toggle="modal" data-target="#sesion">INICIAR SESION</a><br></br>
+              <a href="#login" data-toggle="modal" data-target="#sesion">INICIAR SESION</a><br></br>
               <a href="#contacto" data-toggle="modal" data-target="#contacto">CONTACTO(FOOTER)</a>
             </li>
             :
             <li>
-              <a href="#registro" data-toggle="modal" data-target="#registro">PERFIL</a><br></br>
-              <a href="#contacto" data-toggle="modal" data-target="#contacto">CONTACTO(FOOTER)</a>
+              <Link to={`perfil/${reqSessionName}`} >PERFIL</Link>
             </li>}
-
         </ul>
       </nav>
     );
   }
 }
 
-export default Header;
+module.exports = Header;

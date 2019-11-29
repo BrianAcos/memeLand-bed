@@ -1,5 +1,5 @@
 function usersAuth(req, res, next) {
-    if (req.session.userid) {
+    if (req.session.name) {
         db.query('SELECT * FROM users WHERE username = ?', [req.body.username], function (err, usuario) {
             if (err || usuario.length === 0) {
                 res.render('ERROR')

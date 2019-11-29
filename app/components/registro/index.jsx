@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 
 class Registro extends React.Component {
     render() {
@@ -34,4 +34,4 @@ class Registro extends React.Component {
     }
 }
 
-export default Registro;
+module.exports = Registro;

@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react')
 
 class Login extends React.Component {
     render() {
@@ -13,7 +13,7 @@ class Login extends React.Component {
                             </button>
                         </div>
                         <div className="modal-body mr-auto ml-auto">
-                            <form className="login" action="http://localhost:3001/api/login" method="post" encType="application/x-www-form-urlencoded">
+                            <form className="login" action="http://localhost:3001/login" method="post" encType="application/x-www-form-urlencoded">
                                 <label htmlFor="username"><span>Nombre de usuario:</span></label>
                                 <input required id="username" name="username"></input><br></br>
                                 <label htmlFor="password"><span>Contraseña:</span></label>
@@ -28,4 +28,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+module.exports = Login;

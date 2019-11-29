@@ -76,7 +76,17 @@ router.put('/:id', (req, res, next) => {
         })
 });
 
-// Router.use()
-
+//agregar puntuacion al usuario
+router.post('/puntuar', (req, res, next) => {
+    const idmeme = req.body.idmeme;
+    const puntos = req.body.puntos;
+    Memes.puntuarMeme(puntos, idmeme)
+        .then(() => {
+            res.send(`se agregaron ${puntos} puntos a ${idmeme}`)
+        })
+        .catch((err) => {
+            next(err)
+        })
+});
 
 module.exports = router;

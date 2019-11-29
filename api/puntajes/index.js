@@ -38,7 +38,7 @@ router.post('/', (req, res, next) => {
             res.send(`${req.body.username} diste una puntuacion`);
         }))
         .catch((err) => {
-            next(err);
+            res.send('error')
         })
 });
 
