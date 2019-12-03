@@ -5,13 +5,13 @@ const PaginaPerfil = require('../../components/paginaPerfil');
 
 class MemeLandPage extends React.Component {
     render() {
-        const { memes } = this.props.initialState;
+        const { memes, username } = this.props.initialState;
         return (
             <React.Fragment>
                 <Route
                 exact
                 path="/"
-                render={(props) => <PaginaInicial {...props} memes={memes} />}
+                render={(props) => <PaginaInicial {...props} username={username} memes={memes} />}
                 />
                 <Route
                 exact

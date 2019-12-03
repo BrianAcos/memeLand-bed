@@ -30,7 +30,7 @@ app.set('views', __dirname + '/app/views');
 
 //configurar express-session
 app.use(session({
-    secret: 'my secret',
+    secret: 'mySecret',
     cookie: {maxAge: 43200000}, //12horas
     resave: false,
     saveUninitialized: true,
@@ -62,7 +62,9 @@ app.post('/login', function(req, res) {
         } else {
             bcrypt.compare(req.body.password, result[0].password, function (err, resu) {
                 if (resu == true) {
-                    req.session.userId = req.body.username
+                    req.session.userId = {
+                        username: result[0].username
+                    };
                     res.end('TE HAS LOGEADO DATOS CORRECTOS')
                 } else { 
                     res.end('DATOS INVALIDOS2');

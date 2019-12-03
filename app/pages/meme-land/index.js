@@ -11,6 +11,7 @@ router.get('/', (req, res, next) => {
     .then(memes => {
       const initialState = {
         memes,
+        username: req.session.userId ? req.session.userId.username: '',
       };
       const context = {};
       // const content = renderToString(<View initialState={initialState}/>);

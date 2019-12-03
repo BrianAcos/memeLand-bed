@@ -10,11 +10,11 @@ const SubirMeme = require('../subirMeme');
 
 class PaginaInicial extends React.Component {
   render() {
-    const { memes } = this.props;
+    const { memes, username } = this.props;
 
     return (
       <React.Fragment>
-        <Header />
+        <Header username={username}/>
         <div className="container-fluid">
           <div className="row">
             <Filtros />
