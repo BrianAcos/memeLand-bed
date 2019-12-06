@@ -12,6 +12,58 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //configurar multer
 const upload = multer({ dest: 'dist/memes/' });
 
+
+
+//obtener cantidad de memes subidos por ese usuario
+
+//obtener memes en favoritos segun username
+router.get('/favoritos/:username', (req, res, next) => {
+    Memes.getFavoritosByUser(req.params.username)
+        .then((meme) => {
+            res.send(Memes.convertJSON(meme))
+        })
+        .catch((error) => {
+            next(error);
+        })
+});
+
+//obtener memes no aprobados
+router.get('/aprobacion/null', (req, res, next) => {
+    Memes.getMemeNoAprobado()
+    .then((meme) => {
+        res.send(Memes.convertJSON(meme))
+    })
+    .catch((error) => {
+        next(error);
+    })
+});
+
+//aprobar o reprobar meme
+router.post('/aprobacion/null', (req, res, next) => {
+    const aprobacion = req.body.aprobacion;
+    const idmeme = req.body.idmeme;
+    console.log(aprobacion + idmeme);
+    
+    Memes.aprobarMeme(aprobacion, idmeme)
+    .then(() => {
+        res.send(null)
+    })
+    .catch((error) => {
+        next(error);
+    })
+});
+
+//obtener memes segun categoria
+router.get('/categoria/:id', (req, res, next) => {
+    Memes.getMemeByCategoria(req.params.id)
+        .then((meme) => {
+            res.send(Memes.convertJSON(meme))
+        })
+        .catch((error) => {
+            next(error);
+        })
+});
+
 //obtener 1 meme
 router.get('/:id', (req, res, next) => {
     Memes.getMemeById(req.params.id)
@@ -35,8 +87,8 @@ router.get('/', (req, res, next) => Memes.getAllMemes()
 
 // guardar memes (foto, nombre de usuario, tags, titulo, categoria)
 router.post('/', upload.single('imagen'), (req, res, next) => {
-    const user = 'brian'
-    const tags = req.body.tags
+    const user = req.body.username;
+    const tags = req.body.tags;
     const titulo = req.body.titulo;
     const categoria = req.body.categoria;
     const imagen = `memes/${req.file.filename}`

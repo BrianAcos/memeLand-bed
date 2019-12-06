@@ -8,7 +8,7 @@ CREATE TABLE users(
     nombre VARCHAR(45) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     sexo VARCHAR(45) NULL,
-    birthday DATE NULL,
+    birthday VARCHAR(20) NULL,
     avatar VARCHAR(100) NULL,
     sobremi VARCHAR(500) NULL,
     administrador BOOLEAN DEFAULT false,

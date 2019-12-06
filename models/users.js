@@ -4,7 +4,7 @@ const GET_USERS = 'SELECT * FROM users';
 const GET_USER_ID = 'SELECT * FROM users WHERE username = ?';
 const SAVE_USERS = 'INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)';
 const DELETE_USER = 'DELETE FROM users WHERE username = ?';
-const MODIFY_USER = 'UPDATE users SET sexo = ?, birthday = ?, avatar = ?, sobremi = ? WHERE username = ?';
+const MODIFY_USER = 'UPDATE users SET nombre = ?, sexo = ?, birthday = ?, avatar = ?, sobremi = ? WHERE username = ?';
 
 class Users {
     constructor(username, password, nombre, email, sexo, birthday, avatar, sobremi, administrador) {
@@ -71,9 +71,9 @@ class Users {
         });
     }
 
-    static modifyUserById(id, sexo, birthday, avatar, sobremi) {
+    static modifyUserById(id, nombre, sexo, birthday, avatar, sobremi) {
         return new Promise((resolve, reject) => {
-            db.query(MODIFY_USER, [sexo, birthday, avatar, sobremi, id], (err, result) =>  {
+            db.query(MODIFY_USER, [nombre, sexo, birthday, avatar, sobremi, id], (err, result) =>  {
                 if (err) {
                     reject(err);
                 } else {

@@ -21,16 +21,17 @@ class Filtros extends React.Component {
         return (
             <div className={"col-auto filtros " + (this.state.filtros ? "show" : "hidden")}>
                 <div className="form-group">
-                    <button onClick={this.changeState} className="buttonFiltros" >F<br></br>I<br></br>L<br></br>T<br></br>R<br></br>O<br></br>S<br></br>></button>
-                    <select onChange={this.cambiarCategorias} onClick={this.mandarCategorias} className="custom-select custom-select-sm">
-                        <option defaultValue="all">Categorias</option>
-                        <option value="acertijos">Acertijos</option>
-                        <option value="animales">Animales</option>
-                        <option value="deportes">Deportes</option>
-                        <option value="gifs">Gifs</option>
-                        <option value="peliculas">Peliculas</option>
-                        <option value="uncategorized">Uncategorized</option>
-                    </select>
+                    <button onClick={this.changeState} className="buttonFiltros" >F<br />I<br />L<br />T<br />R<br />O<br />S<br />></button>
+                    <div className="dropdown">
+                        <a className="btn btn-secondary btn-primary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categorias</a>
+                        <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a className="dropdown-item" href="/peliculas">Peliculas</a>
+                            <a className="dropdown-item" href="/acertijos">Acertijos</a>
+                            <a className="dropdown-item" href="/animales">Animales</a>
+                            <a className="dropdown-item" href="/deportes">Deportes</a>
+                            <a className="dropdown-item" href="/gifs">Gifs</a>
+                        </div>
+                    </div>
                 </div>
                 <ul className="otrosFiltros">
                     <a className="desactivado" href="#???"><li>TOP MEMES</li></a>

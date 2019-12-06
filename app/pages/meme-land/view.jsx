@@ -15,13 +15,13 @@ class MemeLandPage extends React.Component {
                 />
                 <Route
                 exact
-                path="/perfil/:username"
-                render={(props) => <PaginaPerfil {...props} username={props.match.params.username} />}
+                path="/:categoria"
+                render={(props) => <PaginaInicial {...props} username={username} memes={memes} />}
                 />
                 <Route
                 exact
-                path="/favoritos/:username"
-                render={(props) => <PaginaInicial {...props} memes={memes} username={props.match.params.username}/>}
+                path="/favoritos/:user"
+                render={(props) => <PaginaInicial {...props} username={username} memes={memes} />}
                 />
             </React.Fragment>
         );

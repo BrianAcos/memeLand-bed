@@ -47,7 +47,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //configurar multer
-const upload = multer({ dest: 'public/memes/' });
+const upload = multer({ dest: 'dist/memes/' });
 
 //rutas
 app.use('/api', apiRouter);
@@ -65,7 +65,7 @@ app.post('/login', function(req, res) {
                     req.session.userId = {
                         username: result[0].username
                     };
-                    res.end('TE HAS LOGEADO DATOS CORRECTOS')
+                    res.redirect('/');
                 } else { 
                     res.end('DATOS INVALIDOS2');
                 }
@@ -73,8 +73,5 @@ app.post('/login', function(req, res) {
         }
     });
 });
-
-
-app.get('/123', (req, res) => {if (req.session.name) { res.send('sape')} else {res.send('noooooo')}});
 
 module.exports = app;

@@ -74,14 +74,15 @@ router.delete('/:id', (req, res, next) => {
         })
 });
 
-//modificar un user (sexo, cumpleaños, sobremi)
+//modificar un user (sexo, cumpleaños, sobremi, nombre)
 router.put('/:id', upload.single('avatar'), (req, res, next) => {
     const avatar = `users/${req.file.filename}`
     const id = req.params.id;
     const sexo = req.body.sexo;
     const birthday = req.body.birthday;
     const sobremi = req.body.sobremi;
-    Users.modifyUserById(id, sexo, birthday, avatar, sobremi)
+    const nombre = req.body.nombre;
+    Users.modifyUserById(id, nombre, sexo, birthday, avatar, sobremi)
         .then(() => {
             res.send(`${id} modificaste tu sexo a ${sexo}, tu cumpleaños a ${birthday} y sobreti ${sobremi} `)
         })

@@ -9,7 +9,7 @@ describe('API', function() {
     describe('/api/memes', function() {
         before(function() {
             const stubbedGetAllMemes = sinon.stub(Memes, 'getAllMemes');
-            stubbedGetAllMemes.resolves([new Memes('idmeme', 'creador', 'titulo', 'tags', 'foto', 'categoria', 'fecha', 'aprobacion', 'votos', 'puntaje')]);
+            stubbedGetAllMemes.resolves([new Memes('idmeme', 'creador', 'titulo', 'tags', 'foto', 'categoria', 'fecha', 'aprobacion')]);
         });
         after(function() {
             Memes.getAllMemes.restore();
@@ -21,7 +21,7 @@ describe('API', function() {
             .then(response => {
                 expect(response.status).to.equal(200);
                 expect(response.body).to.be.an('array').that.have.lengthOf(1);
-                expect(response.body).to.deep.equal([{idmeme: 'idmeme', creador: 'creador', titulo: 'titulo', tags: 'tags', foto: 'foto', categoria: 'categoria', fecha: 'fecha', aprobacion: 'aprobacion', votos: 'votos', puntaje: 'puntaje'}]);
+                expect(response.body).to.deep.equal([{idmeme: 'idmeme', creador: 'creador', titulo: 'titulo', tags: 'tags', foto: 'foto', categoria: 'categoria', fecha: 'fecha', aprobacion: 'aprobacion'}]);
                 done();
             })
             .catch(done);

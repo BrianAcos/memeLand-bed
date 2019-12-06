@@ -15,13 +15,13 @@ class Registro extends React.Component {
                         <div className="modal-body mr-auto ml-auto">
                             <form className="registro" action="http://localhost:3001/api/users" method="post" encType="application/x-www-form-urlencoded">
                                 <label  htmlFor="usernameRegistro"><span>Nombre de usuario:</span></label>
-                                <input required id="usernameRegistro" name="username"></input><br></br>
+                                <input required id="usernameRegistro" name="username"></input><br/>
                                 <label htmlFor="passwordRegistro"><span>Contraseña:</span></label>
-                                <input required id="passwordRegistro" type="password" name="password"></input><br></br>
+                                <input required id="passwordRegistro" type="password" name="password"></input><br/>
                                 <label htmlFor="email"><span>Email:</span></label>
-                                <input required id="email" name="email" type="email"></input><br></br>
+                                <input required id="email" name="email" type="email"></input><br/>
                                 <label htmlFor="nombre"><span>Nombre:</span></label>
-                                <input required id="nombre" name="nombre"></input><br></br>
+                                <input required id="nombre" name="nombre"></input><br/>
                                 <input required type="checkbox" className="form-check-input" id="exampleCheck1"></input>
                                 <label className="form-check-label" htmlFor="exampleCheck1">Acepto la <a href="#politica">Politica de la pagina</a></label>
                                 <button type="submit" className="btn btn-primary">Registrarse</button>

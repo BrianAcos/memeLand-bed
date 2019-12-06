@@ -7,6 +7,7 @@ const Login = require('../login');
 const Registro = require('../registro');
 const Contacto = require('../contacto');
 const SubirMeme = require('../subirMeme');
+const Footer = require('../footer');
 
 class PaginaInicial extends React.Component {
   render() {
@@ -22,7 +23,7 @@ class PaginaInicial extends React.Component {
               <div className="row">
                 {
                   memes.map(meme => (
-                    <Tarjeta key={meme.idmeme} idmeme={meme.idmeme} creador={meme.creador} titulo={meme.titulo} tags={meme.tags} foto={meme.foto} categoria={meme.categoria} fecha={meme.fecha} votos={meme.votos} puntaje={meme.puntaje} />
+                    <Tarjeta key={meme.idmeme} idmeme={meme.idmeme} creador={meme.creador} titulo={meme.titulo} tags={meme.tags} foto={meme.foto} categoria={meme.categoria} fecha={meme.fecha} votos={meme.votos} puntaje={meme.puntaje} aprobacion={meme.aprobacion} />
                   ))
                 }
               </div>
@@ -32,10 +33,15 @@ class PaginaInicial extends React.Component {
         <Login />
         <Registro />
         <Contacto />
-        <SubirMeme /> 
+        <SubirMeme currentUser={username} /> 
+        <Footer />
       </React.Fragment >
     );
   }
+};
+
+PaginaInicial.defaultProps = {
+  memes: [],
 };
 
 module.exports = PaginaInicial;

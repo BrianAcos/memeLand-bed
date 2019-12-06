@@ -1,7 +1,12 @@
 const db = require('../services/db-connection');
 
-const GET_MEMES = 'SELECT * FROM memes';
+const GET_MEMES = 'SELECT * FROM memes WHERE aprobacion = "si"';
 const GET_MEME_ID = 'SELECT * FROM memes WHERE idmeme = ?';
+const GET_MEME_CATEGORIA = 'SELECT * FROM memes WHERE (categoria LIKE ?) AND (aprobacion = "si")';
+const GET_MEME_FAVORITO_BY_USER = 'SELECT * FROM  favoritos LEFT JOIN memes ON favoritos.idmeme = memes.idmeme WHERE (aprobacion = "si") AND (username = "brian")'
+const GET_MEME_NOAPROBADO = 'SELECT * FROM memes WHERE aprobacion is null';
+const GET_MEME_REPROBADO = 'SELECT * FROM memes WHERE aprobacion = "no"';
+const APROBAR_MEME = 'UPDATE memes SET aprobacion = ? WHERE idmeme = ?';
 const SAVE_MEMES = 'INSERT INTO memes VALUES (0, ?, ?, ?, ?, ?, NOW(), null)';
 const DELETE_MEME = 'DELETE FROM memes WHERE idmeme = ?';
 const MODIFY_MEME = 'UPDATE memes SET titulo = ?, tags = ?, categoria = ? WHERE idmeme = ?';
@@ -34,13 +39,81 @@ class Memes {
         });
     }
 
+    static getFavoritosByUser(username) {
+        return new Promise((resolve, reject) => {
+            db.query(GET_MEME_FAVORITO_BY_USER, [username], (error, results) => {
+                if (error) {
+                    reject(error)
+                } else if (results[0] === undefined) {
+                    resolve('404 not found')
+                } else {
+                    const memes = results.map((result) => {
+                        const { idmeme, creador, titulo, tags, foto, categoria, fecha, aprobacion, } = result;
+                        return new Memes(idmeme, creador, titulo, tags, foto, categoria, fecha, aprobacion)
+                    });
+                    resolve(memes)
+                }
+            });
+        });
+    }
+
+    static getMemeByCategoria(categoria) {
+        return new Promise((resolve, reject) => {
+            db.query(GET_MEME_CATEGORIA, [categoria], (error, results) => {
+                if (error) {
+                    reject(error)
+                } else if (results[0] === undefined) {
+                    resolve('404 not found')
+                } else {
+                    const memes = results.map((result) => {
+                        const { idmeme, creador, titulo, tags, foto, categoria, fecha, aprobacion, } = result;
+                        return new Memes(idmeme, creador, titulo, tags, foto, categoria, fecha, aprobacion)
+                    });
+                    resolve(memes)
+                }
+            });
+        });
+    }
+
+    static getMemeNoAprobado() {
+        return new Promise((resolve, reject) => {
+            db.query(GET_MEME_NOAPROBADO, (err, results) => {
+                if (err) {
+                    reject(err)
+                } else if (results[0] === undefined) {
+                    resolve('404 not found')
+                }  else {
+                    const memes = results.map((result) => {
+                        const { idmeme, creador, titulo, tags, foto, categoria, fecha, aprobacion, } = result;
+                        return new Memes(idmeme, creador, titulo, tags, foto, categoria, fecha, aprobacion)
+                    });
+                    resolve(memes)
+                }
+            });
+        });
+    }
+
+    static aprobarMeme(aprobacion, id) {
+        return new Promise((resolve, reject) => {
+            db.query(APROBAR_MEME, [aprobacion, id], (err, result) =>  {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve();
+                }
+            });
+        });
+    }
+
 
     static getAllMemes() {
         return new Promise((resolve, reject) => {
             db.query(GET_MEMES, (err, results) => {
                 if (err) {
                     reject(err)
-                } else {
+                } else if (results[0] === undefined) {
+                    resolve('404 not found')
+                }  else {
                     const memes = results.map((result) => {
                         const { idmeme, creador, titulo, tags, foto, categoria, fecha, aprobacion, } = result;
                         return new Memes(idmeme, creador, titulo, tags, foto, categoria, fecha, aprobacion)

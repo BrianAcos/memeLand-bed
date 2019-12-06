@@ -16,41 +16,22 @@ class PaginaPerfil extends React.Component {
         }
     }
 
-    componentDidMount() {
-            fetch(`/api/users/${this.props.username}`)       //VA A LA API A BUSCAR LOS DATOS SOBRE ESA TAREA Y LOS CARGA EN EL ESTADO
-                .then(res => res.json())
-                .then(data => {
-                    this.setState({
-                        user: data,
-                        loading: false,
-                        error: false,
-                    });
-                })
-                .catch((err) => {
-                    console.error(err);
-                    this.setState({
-                        task: null,
-                        loading: false,
-                        error: true,
-                    });
-                });
-    }
-
     render() {
         return (
             <React.Fragment>
-                <Header />
+                <Header username={this.props.user.username}/>
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col contenido">
                             <div className="row">
-                                <UserStats nombre={this.state.user.nombre} birthday={this.state.user.birthday} sexo={this.state.user.sexo} sobremi={this.state.user.sobremi} avatar={this.state.user.avatar} />
-                                {/* <UserData nombre={this.state.user.nombre} birthday={this.state.user.birthday} sexo={this.state.user.sexo} sobremi={this.state.user.sobremi} /> */}
+                                <UserStats user={this.props.user}/>
+                                <UserData currentUser={this.props.currentUser} user={this.props.user}/>
+                                {/* tarjeta con ultimos memes */}
                             </div>
-                        </div>
+                        </div>  
                     </div>
                 </div>
-                <SubirMeme />
+                <SubirMeme currentUser={this.props.currentUser} />
             </React.Fragment >
         );
     }

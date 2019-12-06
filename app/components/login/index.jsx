@@ -15,9 +15,9 @@ class Login extends React.Component {
                         <div className="modal-body mr-auto ml-auto">
                             <form className="login" action="http://localhost:3001/login" method="post" encType="application/x-www-form-urlencoded">
                                 <label htmlFor="username"><span>Nombre de usuario:</span></label>
-                                <input required id="username" name="username"></input><br></br>
+                                <input required id="username" name="username"></input><br/>
                                 <label htmlFor="password"><span>Contraseña:</span></label>
-                                <input required id="password" type="password" name="password"></input><br></br>
+                                <input required id="password" type="password" name="password"></input><br/>
                                 <button type="submit" className="btn btn-primary">Ingresar</button>
                             </form>
                         </div>
