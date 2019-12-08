@@ -101,6 +101,7 @@ router.get('/favoritos/:user', (req, res, next) => {
       const initialState = {
         memes,
         username: req.session.userId ? req.session.userId.username : '',
+        administrador: req.session.userId ? req.session.userId.admin : '',
       };
       const context = {};
       // const content = renderToString(<View initialState={initialState}/>);

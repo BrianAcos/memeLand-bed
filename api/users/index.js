@@ -51,7 +51,11 @@ router.post('/', (req, res, next) => {
                     res.send(`Felicidades ${req.body.username} ya eres parte de MemeLand!`);
                 }))
                 .catch((error) => {
-                    next(error)
+                    if (error === 'email o usuario existente') {
+                        res.send('el email o nombre de usuario ya esta registrado');
+                    } else {
+                        next(error);
+                    }
                 });
         }
 

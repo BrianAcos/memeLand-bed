@@ -28,6 +28,7 @@ CREATE TABLE memes(
     CONSTRAINT fk_creador
     FOREIGN KEY (creador)
     REFERENCES memeland.users(username)
+    ON DELETE CASCADE
     );
 
 CREATE TABLE comentarios(
@@ -37,10 +38,12 @@ CREATE TABLE comentarios(
     PRIMARY KEY (idmeme, username, comentario),
     CONSTRAINT fk_comentario_meme
     FOREIGN KEY (idmeme)
-    REFERENCES memeland.memes(idmeme),
+    REFERENCES memeland.memes(idmeme)
+    ON DELETE CASCADE,
     CONSTRAINT fk_comentario_user
     FOREIGN KEY (username)
     REFERENCES memeland.users(username)
+    ON DELETE CASCADE
     );
 
 CREATE TABLE favoritos(
@@ -49,10 +52,12 @@ CREATE TABLE favoritos(
     PRIMARY KEY (idmeme, username),
     CONSTRAINT fk_favorito_meme
     FOREIGN KEY (idmeme)
-    REFERENCES memeland.memes(idmeme),
+    REFERENCES memeland.memes(idmeme)
+    ON DELETE CASCADE,
     CONSTRAINT fk_favorito_user
     FOREIGN KEY (username)
     REFERENCES memeland.users(username)
+    ON DELETE CASCADE
     );
 
 CREATE TABLE puntajes(
@@ -63,8 +68,10 @@ CREATE TABLE puntajes(
     PRIMARY KEY (idmeme, username),
     CONSTRAINT fk_puntaje_meme
     FOREIGN KEY (idmeme)
-    REFERENCES memeland.memes(idmeme),
+    REFERENCES memeland.memes(idmeme)
+    ON DELETE CASCADE,
     CONSTRAINT fk_puntaje_user
     FOREIGN KEY (username)
     REFERENCES memeland.users(username)
+    ON DELETE CASCADE
     );

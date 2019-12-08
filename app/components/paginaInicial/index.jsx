@@ -11,19 +11,21 @@ const Footer = require('../footer');
 
 class PaginaInicial extends React.Component {
   render() {
-    const { memes, username } = this.props;
+    const { memes, username, administrador } = this.props;
+    console.log(this.props.administrador);
+
 
     return (
       <React.Fragment>
-        <Header username={username}/>
+        <Header username={username} />
         <div className="container-fluid">
           <div className="row">
             <Filtros />
-            <div className="col contenido">
+            <div className="col-10 contenido">
               <div className="row">
                 {
                   memes.map(meme => (
-                    <Tarjeta key={meme.idmeme} idmeme={meme.idmeme} creador={meme.creador} titulo={meme.titulo} tags={meme.tags} foto={meme.foto} categoria={meme.categoria} fecha={meme.fecha} votos={meme.votos} puntaje={meme.puntaje} aprobacion={meme.aprobacion} />
+                    <Tarjeta username={username} key={meme.idmeme} idmeme={meme.idmeme} creador={meme.creador} titulo={meme.titulo} tags={meme.tags} foto={meme.foto} categoria={meme.categoria} fecha={meme.fecha} votos={meme.votos} puntaje={meme.puntaje} aprobacion={meme.aprobacion} />
                   ))
                 }
               </div>
@@ -33,7 +35,7 @@ class PaginaInicial extends React.Component {
         <Login />
         <Registro />
         <Contacto />
-        <SubirMeme currentUser={username} /> 
+        <SubirMeme currentUser={username} />
         <Footer />
       </React.Fragment >
     );

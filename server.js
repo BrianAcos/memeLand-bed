@@ -63,7 +63,8 @@ app.post('/login', function(req, res) {
             bcrypt.compare(req.body.password, result[0].password, function (err, resu) {
                 if (resu == true) {
                     req.session.userId = {
-                        username: result[0].username
+                        username: result[0].username,
+                        admin: result[0].administrador,
                     };
                     res.redirect('/');
                 } else { 

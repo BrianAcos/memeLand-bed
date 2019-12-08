@@ -87,10 +87,13 @@ class Users {
         const { username, password, nombre, email, sexo, birthday, avatar, sobremi, administrador } = this;
         return new Promise((resolve, reject) => {
             db.query(SAVE_USERS, [username, password, nombre, email, sexo, birthday, avatar, sobremi, administrador], (err, resp, fields) => {
-                if(err) {
-                    reject(err)
+                const errno = err ? err.errno : err;
+                if(errno === 1062) {
+                    reject('email o usuario existente');
+                } else if (errno) {
+                    reject(errno);
                 } else {
-                    resolve()
+                    resolve();
                 }
             });
         });

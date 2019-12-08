@@ -77,12 +77,14 @@ class Tarjeta extends React.Component {
       method: 'POST',
       body: JSON.stringify({
         idmeme: this.props.idmeme,
-        username: 'brian', // EL USUARIO QUE HIZO CLICK ESTA EN LA SESSION
+        username: this.props.username, // EL USUARIO QUE HIZO CLICK ESTA EN LA SESSION
         comentario: this.state.comentario,
       }),
     })
       .then(() => {
-        this.setState({ comentario: true })
+        this.setState({ comentario: true });
+        this.componentDidMount();
+        alert('has comentado');
       })
       .catch(() => {
         this.setState({ error: 'error-comentario' });
@@ -99,7 +101,7 @@ class Tarjeta extends React.Component {
       method: 'POST',
       body: JSON.stringify({
         idmeme: this.props.idmeme,
-        username: 'brian', // EL USUARIO QUE HIZO CLICK ESTA EN LA SESSION
+        username: this.props.username, // EL USUARIO QUE HIZO CLICK ESTA EN LA SESSION
         puntaje: event.target.value,
         creador: this.props.creador,
       }),
@@ -114,22 +116,26 @@ class Tarjeta extends React.Component {
 
   //cuando hace click en el boton favoritos agrega a favoritos y cambia el estado
   changeFav() {
-    fetch('/api/favoritos', {
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      method: 'POST',
-      body: JSON.stringify({
-        username: 'brian', //EL USUARIO QUE HIZO CLICK ESTA EN LA SESSION
-        idmeme: this.props.idmeme,
+    if (this.props.username) {
+      fetch('/api/favoritos', {
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        method: 'POST',
+        body: JSON.stringify({
+          username: this.props.username, //EL USUARIO QUE HIZO CLICK ESTA EN LA SESSION
+          idmeme: this.props.idmeme,
+        })
       })
-    })
-      .then(() => {
-        this.setState({ fav: true })
-      })
-      .catch(() => {
-        this.setState({ error: 'error-favoritos' });
-      })
-
+        .then(() => {
+          this.setState({ fav: true })
+        })
+        .catch(() => {
+          this.setState({ error: 'error-favoritos' });
+        })
+    } else {
+      alert('Registrese para agregar a favoritos')
+    }
   }
+
 
   render() {
     const radioName = `estrellas-${this.props.idmeme}`;
@@ -169,7 +175,7 @@ class Tarjeta extends React.Component {
               </form>}
             {this.props.aprobacion ? null :
               <div>
-                <input type="hidden" value="si" id="si" /><label htmlFor="si"><button onClick={this.aprobar.bind(this, 'si')} className="btn-success">APROBAR</button></label><br/>
+                <input type="hidden" value="si" id="si" /><label htmlFor="si"><button onClick={this.aprobar.bind(this, 'si')} className="btn-success">APROBAR</button></label><br />
                 <input type="hidden" value="no" id="no" /><label htmlFor="no"><button onClick={this.aprobar.bind(this, 'no')} className="btn-danger">NO APROBAR</button></label>
               </div>
             }
