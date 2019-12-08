@@ -3,7 +3,7 @@ const db = require('../services/db-connection');
 const GET_MEMES = 'SELECT * FROM memes WHERE aprobacion = "si"';
 const GET_MEME_ID = 'SELECT * FROM memes WHERE idmeme = ?';
 const GET_MEME_CATEGORIA = 'SELECT * FROM memes WHERE (categoria LIKE ?) AND (aprobacion = "si")';
-const GET_MEME_FAVORITO_BY_USER = 'SELECT * FROM  favoritos LEFT JOIN memes ON favoritos.idmeme = memes.idmeme WHERE (aprobacion = "si") AND (username = "brian")'
+const GET_MEME_FAVORITO_BY_USER = 'SELECT * FROM  favoritos LEFT JOIN memes ON favoritos.idmeme = memes.idmeme WHERE (aprobacion = "si") AND (username = ?)'
 const GET_MEME_NOAPROBADO = 'SELECT * FROM memes WHERE aprobacion is null';
 const GET_MEME_REPROBADO = 'SELECT * FROM memes WHERE aprobacion = "no"';
 const APROBAR_MEME = 'UPDATE memes SET aprobacion = ? WHERE idmeme = ?';

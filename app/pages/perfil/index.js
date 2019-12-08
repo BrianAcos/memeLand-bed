@@ -15,7 +15,6 @@ router.get('/:username', (req, res, next) => {
       };
       
       const context = {};
-      // const content = renderToString(<View initialState={initialState}/>);
       const content = renderToString(
         <StaticRouter location={req.url} context={context} >
           <View initialState={initialState} />

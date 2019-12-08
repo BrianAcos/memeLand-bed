@@ -112,6 +112,7 @@ class Tarjeta extends React.Component {
 
   //cuando hace click en las estrellas califica el meme
   cambiarPuntuacion(event) {
+    const puntaje = event.target.value;
     if (this.props.username) {
       fetch('/api/puntajes', {
         headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -119,13 +120,18 @@ class Tarjeta extends React.Component {
         body: JSON.stringify({
           idmeme: this.props.idmeme,
           username: this.props.username, // EL USUARIO QUE HIZO CLICK ESTA EN LA SESSION
-          puntaje: event.target.value,
+          puntaje: puntaje,
           creador: this.props.creador,
         }),
       })
-        .then(() => {
-          this.setState({ puntuacion: true });
-          alert(`diste una puntuacion de ${event.target.value}`);
+        .then((res) => {
+          if (res.status === 500) {   //NO ENTIENDO PORQUE NO VA A CATCH!!??
+            alert(`error al puntuar`)
+            this.setState({ error: 'error-puntuacion' });
+          } else {
+            this.setState({ puntuacion: true });
+            alert(`diste una puntuacion de ${puntaje}`);
+          }
         })
         .catch(() => {
           this.setState({ error: 'error-puntuacion' });
@@ -150,7 +156,7 @@ class Tarjeta extends React.Component {
         .then((res) => {  //NO ENTIENDO PORQUE NO VA A CATCH!!??
           if (res.status === 500) {
             this.setState({ error: 'error-favoritos' });
-            alert('error al agregar a favoritos')
+            alert('error al agregar a favoritos');
           } else {
             this.setState({ fav: true });
             alert('agregaste a favoritos');
@@ -185,7 +191,7 @@ class Tarjeta extends React.Component {
 
             {this.state.error === 'error-puntuacion' ? //si hay un error al puntuar tira un error en la tarjeta
               <form>
-                <p> ERROR AL PUNTUAR </p>
+                <p className="puntuacion">ERROR</p>
               </form>
               :
               <form>
@@ -210,7 +216,7 @@ class Tarjeta extends React.Component {
             }
 
             {this.state.error === 'error-favoritos' ?  //cuando hay un error al agregar a favoritos se dibuja un error
-              <p>ERROR</p>
+              <p className="puntuacion">ERROR</p>
               :
               <a href="#???" onClick={this.changeFav}><img src={this.state.fav ? "../assets/fav.png" : "../assets/no-fav.png"} alt="fav" /></a>}
 

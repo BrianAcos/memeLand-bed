@@ -7,22 +7,23 @@ const { StaticRouter } = require('react-router-dom');
 
 
 router.get('/', (req, res, next) => {
-  Memes.getAllMemes()
+  Memes.getAllMemes() //voy a el model memes y hago la req de pedir todos los memes
     .then(memesSinProcesar => {
-      const memes = memesSinProcesar === '404 not found' ? [] : memesSinProcesar;
-      const initialState = {
+      const memes = memesSinProcesar === '404 not found' ? [] : memesSinProcesar; //hago este proceso porque si no hay ningun meme se me cae la aplicacion
+      const initialState = { //cargo las props en el inicialstate 
         memes,
-        username: req.session.userId ? req.session.userId.username : '',
+        username: req.session.userId ? req.session.userId.username : '',  //el usuario de la session
+        administrador: req.session.userId ? req.session.userId.admin : '',
       };
       const context = {};
-      // const content = renderToString(<View initialState={initialState}/>);
+      // const content = renderToString(<View initialState={initialState}/>);  // COMO ESTABA ANTES
       const content = renderToString(
         <StaticRouter location={req.url} context={context} >
           <View initialState={initialState} />
         </StaticRouter>
       );
 
-      res.render('template', {
+      res.render('template', {   //HACE USO DE EJS Y HACE EL DIBUJADO DEL TEMPLATE (CARPETA VIEWS TEMPLATE.EJS) Y LE PASA 4 PROPIEDADES PAGENAME, ETC 
         pageName: 'meme-land',
         pageTitle: 'Meme Land',
         initialState,
@@ -46,7 +47,6 @@ router.get('/noaprobados', (req, res, next) => {
           username: req.session.userId ? req.session.userId.username : '',
         };
         const context = {};
-        // const content = renderToString(<View initialState={initialState}/>);
         const content = renderToString(
           <StaticRouter location={req.url} context={context} >
             <View initialState={initialState} />
@@ -75,7 +75,6 @@ router.get('/:categoria', (req, res, next) => {
         username: req.session.userId ? req.session.userId.username : '',
       };
       const context = {};
-      // const content = renderToString(<View initialState={initialState}/>);
       const content = renderToString(
         <StaticRouter location={req.url} context={context} >
           <View initialState={initialState} />
@@ -101,10 +100,8 @@ router.get('/favoritos/:user', (req, res, next) => {
       const initialState = {
         memes,
         username: req.session.userId ? req.session.userId.username : '',
-        administrador: req.session.userId ? req.session.userId.admin : '',
       };
       const context = {};
-      // const content = renderToString(<View initialState={initialState}/>);
       const content = renderToString(
         <StaticRouter location={req.url} context={context} >
           <View initialState={initialState} />

@@ -43,13 +43,13 @@ router.get('/memes/:idmeme', (req, res, next) => {
 
 // guardar puntaje 
 router.post('/', (req, res, next) => {
-    const newComent = new Puntajes(req.body.idmeme, req.body.username, req.body.puntaje, req.body.creador);
-    newComent.save()
+    const newPuntaje = new Puntajes(req.body.idmeme, req.body.username, req.body.puntaje, req.body.creador);
+    newPuntaje.save()
         .then((() => {
             res.send(`${req.body.username} diste una puntuacion`);
         }))
         .catch((err) => {
-            res.send('error')
+            next(err)
         })
 });
 
