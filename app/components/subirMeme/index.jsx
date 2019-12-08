@@ -9,7 +9,7 @@ class SubirMeme extends React.Component {
     }
 
     render() {
-        const username = this.props.currentUser;
+        const username = this.props.username;
         return (
             <div className="modal fade" id="subirMeme" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">

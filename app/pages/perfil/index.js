@@ -11,7 +11,8 @@ router.get('/:username', (req, res, next) => {
     .then(user => {
       const initialState = {
         user,
-        currentUser: req.session.userId ? req.session.userId.username: null,
+        username: req.session.userId ? req.session.userId.username: null,
+        administrador: req.session.userId ? req.session.userId.admin : '',
       };
       
       const context = {};

@@ -23,7 +23,8 @@ class Header extends React.Component {
           <li>
             <a href={`http://localhost:3001/perfil/${username}`}>PERFIL</a><br/>
             <a href={`http://localhost:3001/noaprobados`}>MODERAR</a><br/>
-            <a href={`http://localhost:3001/favoritos/${username}`}>FAVORITOS</a>
+            <a href={`http://localhost:3001/favoritos/${username}`}>FAVORITOS</a><br/>
+            <a href="http://localhost:3001/api/cerrarSesion">CERRAR SESION</a>
           </li>
             // <li><Link to={`perfil/${username}`} >PERFIL</Link></li>
             :

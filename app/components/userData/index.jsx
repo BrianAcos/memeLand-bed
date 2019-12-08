@@ -18,6 +18,7 @@ class UserData extends React.Component {
         this.valueBirthday = this.valueBirthday.bind(this);
         this.valueAvatar = this.valueAvatar.bind(this);
         this.mandarCambios = this.mandarCambios.bind(this);
+        this.borrarUser = this.borrarUser.bind(this);
     }
 
     modificarUser() {
@@ -40,6 +41,16 @@ class UserData extends React.Component {
         this.avatar = e.target.files[0];
     }
 
+    borrarUser() {
+        fetch(`http://localhost:3001/api/users/${this.props.user.username}`, {
+            method: 'DELETE',
+        })
+            .then((res) => { alert('borraste usuario'), console.log(res) }
+            )
+            .catch((err) => { this.setState({ modificacion: 'error' }), console.log(err) }
+            )
+    }
+
     mandarCambios() {
         var data = new FormData();
         data.append('avatar', this.avatar);
@@ -57,7 +68,7 @@ class UserData extends React.Component {
 
     render() {
         const avatar = this.props.user.avatar ? this.props.user.avatar : 'assets/user.png';
-        if (this.props.currentUser !== this.props.user.username) {
+        if (this.props.username !== this.props.user.username) {
             return (
                 <div className="col col-12 col-md-4">
                     <div className="tarjeta">
@@ -118,7 +129,10 @@ class UserData extends React.Component {
                                     <button onClick={this.mandarCambios}>Guardar cambios</button>
                                 </form>
                                 :
-                                <button onClick={this.modificarUser}>Modificar</button>
+                                <div>
+                                    <button onClick={this.modificarUser}>Modificar</button>
+                                    <button onClick={this.borrarUser} className='btn-danger' >Borrar Cuenta</button>
+                                </div>
                             }
                         </div>
                     </div>

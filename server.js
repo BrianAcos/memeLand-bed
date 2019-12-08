@@ -64,15 +64,23 @@ app.post('/login', function(req, res) {
                 if (resu == true) {
                     req.session.userId = {
                         username: result[0].username,
-                        admin: result[0].administrador,
+                        administrador: result[0].administrador,
                     };
-                    res.redirect('/');
+                    res.redirect(req.headers.referer);
                 } else { 
                     res.end('DATOS INVALIDOS2');
                 }
             });
         }
     });
+});
+
+app.get('/api/cerrarSesion', (req, res) => {
+    req.session.userId = {
+        username: null,
+        administrador: null,
+    };
+    res.redirect('/');
 });
 
 module.exports = app;

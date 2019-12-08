@@ -4,6 +4,10 @@ const Header = require('../header');
 const SubirMeme = require('../subirMeme');
 const UserData = require('../userData');
 const UserStats = require('../userStats');
+const Login = require('../login');
+const Registro = require('../registro');
+const Footer = require('../footer');
+const Contacto = require('../contacto');
 
 class PaginaPerfil extends React.Component {
     constructor(props) {
@@ -19,19 +23,23 @@ class PaginaPerfil extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Header username={this.props.user.username}/>
+                <Header username={this.props.username} />
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col contenido">
                             <div className="row">
-                                <UserStats user={this.props.user}/>
-                                <UserData currentUser={this.props.currentUser} user={this.props.user}/>
+                                <UserStats user={this.props.user} />
+                                <UserData username={this.props.username} user={this.props.user} />
                                 {/* tarjeta con ultimos memes */}
                             </div>
-                        </div>  
+                        </div>
                     </div>
                 </div>
-                <SubirMeme currentUser={this.props.currentUser} />
+                <SubirMeme username={this.props.username} />
+                <Contacto />
+                <Login />
+                <Registro />
+                <Contacto />
             </React.Fragment >
         );
     }

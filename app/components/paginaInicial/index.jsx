@@ -12,9 +12,6 @@ const Footer = require('../footer');
 class PaginaInicial extends React.Component {
   render() {
     const { memes, username, administrador } = this.props;
-    console.log(this.props.administrador);
-
-
     return (
       <React.Fragment>
         <Header username={username} />
@@ -35,7 +32,7 @@ class PaginaInicial extends React.Component {
         <Login />
         <Registro />
         <Contacto />
-        <SubirMeme currentUser={username} />
+        <SubirMeme username={username} />
         <Footer />
       </React.Fragment >
     );

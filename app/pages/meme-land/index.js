@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
       const initialState = { //cargo las props en el inicialstate 
         memes,
         username: req.session.userId ? req.session.userId.username : '',  //el usuario de la session
-        administrador: req.session.userId ? req.session.userId.admin : '',
+        administrador: req.session.userId ? req.session.userId.administrador : '',
       };
       const context = {};
       // const content = renderToString(<View initialState={initialState}/>);  // COMO ESTABA ANTES
@@ -36,7 +36,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/noaprobados', (req, res, next) => {
-  if (req.session.userId.username !== 'Brian') {
+  if (req.session.userId.administrador !== 1) {
     res.send('SE NECESITA SER ADMINISTRADOR PARA APROBAR O REPROBAR MEMES');
   } else {
     Memes.getMemeNoAprobado()
