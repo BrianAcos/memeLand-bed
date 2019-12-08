@@ -65,7 +65,7 @@ router.post('/', (req, res, next) => {
 
 // borrar un user
 router.delete('/:id', (req, res, next) => {
-    Users.deleteUserById(req.params.id, hash)
+    Users.deleteUserById(req.params.id)
         .then(() => {
             res.send(`El usuario ${req.params.id} ha sido borrado`);
         })

@@ -37,7 +37,7 @@ class UserStats extends React.Component {
         return (
             <div className="col col-12 col-md-4">
                 <div className="tarjeta">
-                    <div className="row meme">
+                    <div className="meme">
                         <h1>Estadisticas:</h1><br/>
                         <ul>
                             <li>

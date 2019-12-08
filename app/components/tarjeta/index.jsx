@@ -68,7 +68,7 @@ class Tarjeta extends React.Component {
       })
       .catch((err) => {
         this.setState({
-          comentariosDelMeme: {},
+          puntajeDelMeme: {},
           error: 'error-carga-de-puntaje',
         });
         alert('error al cargar puntaje');
@@ -130,6 +130,7 @@ class Tarjeta extends React.Component {
             this.setState({ error: 'error-puntuacion' });
           } else {
             this.setState({ puntuacion: true });
+            this.componentDidMount();
             alert(`diste una puntuacion de ${puntaje}`);
           }
         })
@@ -173,6 +174,7 @@ class Tarjeta extends React.Component {
 
 
   render() {
+    const promedio = this.state.puntajeDelMeme.puntos/this.state.puntajeDelMeme.votos;
     const radioName = `estrellas-${this.props.idmeme}`;  //nombre para identificar a cada estrella de puntuacion
     if (this.state.borrarComponente === true) { return (null) }  //usado para borrar los las tarjetas cuando se aprueba o se desaprueba un meme
     return (
@@ -207,6 +209,7 @@ class Tarjeta extends React.Component {
                   <input onChange={this.cambiarPuntuacion} id={`radio1-${radioName}`} type="radio" name={radioName} value="1"></input>
                   <label htmlFor={`radio1-${radioName}`}>★</label>
                 </p>
+                <p>Votos:{this.state.puntajeDelMeme.votos} &emsp; prom:{promedio}</p>
               </form>}
             {this.props.aprobacion ? null :  //componente para cuando hay que aprobar o desaprobar un meme
               <div>
