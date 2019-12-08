@@ -42,8 +42,6 @@ router.get('/aprobacion/null', (req, res, next) => {
 router.post('/aprobacion/null', (req, res, next) => {
     const aprobacion = req.body.aprobacion;
     const idmeme = req.body.idmeme;
-    console.log(aprobacion + idmeme);
-    
     Memes.aprobarMeme(aprobacion, idmeme)
     .then(() => {
         res.send(null)

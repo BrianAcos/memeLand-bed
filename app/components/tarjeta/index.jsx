@@ -23,6 +23,7 @@ class Tarjeta extends React.Component {
     this.cambiarPuntuacion = this.cambiarPuntuacion.bind(this);
   }
 
+  //en /noaprobados aparecen los memes no aprobados y se envia la calificacion si o no 
   aprobar(event) {
     fetch('/api/memes/aprobacion/null', {
       headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -40,8 +41,9 @@ class Tarjeta extends React.Component {
       })
   }
 
+  //cuando carga la aplicacion  hace un fetch las tarjetas para ir a buscar los comentarios de ese meme y los puntos
   componentDidMount() {
-    fetch(`/api/comentarios/memes/${this.props.idmeme}`)       //VA A LA API A BUSCAR LOS DATOS SOBRE ESA TAREA Y LOS CARGA EN EL ESTADO
+    fetch(`/api/comentarios/memes/${this.props.idmeme}`)
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -54,8 +56,9 @@ class Tarjeta extends React.Component {
           comentariosDelMeme: [],
           error: 'error-carga-de-comentarios',
         });
+        alert('error al cargar comentarios');
       });
-    fetch(`/api/puntajes/memes/${this.props.idmeme}`)       //VA A LA API A BUSCAR LOS DATOS SOBRE ESA TAREA Y LOS CARGA EN EL ESTADO
+    fetch(`/api/puntajes/memes/${this.props.idmeme}`)
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -68,50 +71,69 @@ class Tarjeta extends React.Component {
           comentariosDelMeme: {},
           error: 'error-carga-de-puntaje',
         });
+        alert('error al cargar puntaje');
       });
   }
 
+  //envia el comentario que hizo el usuario y tira de nuevo el componentdidmount para que aparezca el comentario que realizo
   enviarComentario() {
-    fetch('/api/comentarios', {
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      method: 'POST',
-      body: JSON.stringify({
-        idmeme: this.props.idmeme,
-        username: this.props.username, // EL USUARIO QUE HIZO CLICK ESTA EN LA SESSION
-        comentario: this.state.comentario,
-      }),
-    })
-      .then(() => {
-        this.setState({ comentario: true });
-        this.componentDidMount();
-        alert('has comentado');
+    if (this.props.username) {
+      fetch('/api/comentarios', {
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        method: 'POST',
+        body: JSON.stringify({
+          idmeme: this.props.idmeme,
+          username: this.props.username, // EL USUARIO QUE HIZO CLICK ESTA EN LA SESSION
+          comentario: this.state.comentario,
+        }),
       })
-      .catch(() => {
-        this.setState({ error: 'error-comentario' });
-      })
+        .then(() => {
+          this.setState({ comentario: true });
+          this.componentDidMount();
+          alert('has comentado');
+        })
+        .catch(() => {
+          this.setState({ error: 'error-comentario' });
+          alert('error al comentar');
+        })
+    } else {
+      alert('debes estar registrado para comentar');
+    }
   }
 
+  //guarda en el estado lo que va comentando el usuario en el meme
   cambiarComentario(event) {
-    this.setState({ comentario: event.target.value });
+    if (this.props.username) {
+      this.setState({ comentario: event.target.value });
+    } else {
+      alert('debes estar registrado para comentar');
+    }
   }
 
+  //cuando hace click en las estrellas califica el meme
   cambiarPuntuacion(event) {
-    fetch('/api/puntajes', {
-      headers: { "Content-Type": "application/json; charset=utf-8" },
-      method: 'POST',
-      body: JSON.stringify({
-        idmeme: this.props.idmeme,
-        username: this.props.username, // EL USUARIO QUE HIZO CLICK ESTA EN LA SESSION
-        puntaje: event.target.value,
-        creador: this.props.creador,
-      }),
-    })
-      .then(() => {
-        this.setState({ puntuacion: true })
+    if (this.props.username) {
+      fetch('/api/puntajes', {
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        method: 'POST',
+        body: JSON.stringify({
+          idmeme: this.props.idmeme,
+          username: this.props.username, // EL USUARIO QUE HIZO CLICK ESTA EN LA SESSION
+          puntaje: event.target.value,
+          creador: this.props.creador,
+        }),
       })
-      .catch(() => {
-        this.setState({ error: 'error-puntuacion' });
-      })
+        .then(() => {
+          this.setState({ puntuacion: true });
+          alert(`diste una puntuacion de ${event.target.value}`);
+        })
+        .catch(() => {
+          this.setState({ error: 'error-puntuacion' });
+          alert('error al puntuar');
+        })
+    } else {
+      alert('debes registrarte para puntuar');
+    }
   }
 
   //cuando hace click en el boton favoritos agrega a favoritos y cambia el estado
@@ -125,11 +147,18 @@ class Tarjeta extends React.Component {
           idmeme: this.props.idmeme,
         })
       })
-        .then(() => {
-          this.setState({ fav: true })
+        .then((res) => {  //NO ENTIENDO PORQUE NO VA A CATCH!!??
+          if (res.status === 500) {
+            this.setState({ error: 'error-favoritos' });
+            alert('error al agregar a favoritos')
+          } else {
+            this.setState({ fav: true });
+            alert('agregaste a favoritos');
+          }
         })
         .catch(() => {
           this.setState({ error: 'error-favoritos' });
+          alert('error al agregar a favoritos')
         })
     } else {
       alert('Registrese para agregar a favoritos')
@@ -138,8 +167,8 @@ class Tarjeta extends React.Component {
 
 
   render() {
-    const radioName = `estrellas-${this.props.idmeme}`;
-    if (this.state.borrarComponente === true) { return (null) }
+    const radioName = `estrellas-${this.props.idmeme}`;  //nombre para identificar a cada estrella de puntuacion
+    if (this.state.borrarComponente === true) { return (null) }  //usado para borrar los las tarjetas cuando se aprueba o se desaprueba un meme
     return (
       <div className="col col-12 col-md-6">
         <div className="tarjeta">
@@ -154,9 +183,9 @@ class Tarjeta extends React.Component {
           </div>
           <div className="row botones">
 
-            {this.state.error === 'error-puntuacion' ?
+            {this.state.error === 'error-puntuacion' ? //si hay un error al puntuar tira un error en la tarjeta
               <form>
-                <p className="puntuacion"> ERROR AL PUNTUAR </p>
+                <p> ERROR AL PUNTUAR </p>
               </form>
               :
               <form>
@@ -173,15 +202,15 @@ class Tarjeta extends React.Component {
                   <label htmlFor={`radio1-${radioName}`}>★</label>
                 </p>
               </form>}
-            {this.props.aprobacion ? null :
+            {this.props.aprobacion ? null :  //componente para cuando hay que aprobar o desaprobar un meme
               <div>
                 <input type="hidden" value="si" id="si" /><label htmlFor="si"><button onClick={this.aprobar.bind(this, 'si')} className="btn-success">APROBAR</button></label><br />
                 <input type="hidden" value="no" id="no" /><label htmlFor="no"><button onClick={this.aprobar.bind(this, 'no')} className="btn-danger">NO APROBAR</button></label>
               </div>
             }
 
-            {this.state.error === 'error-favoritos' ?
-              <a href="#???">Error</a>
+            {this.state.error === 'error-favoritos' ?  //cuando hay un error al agregar a favoritos se dibuja un error
+              <p>ERROR</p>
               :
               <a href="#???" onClick={this.changeFav}><img src={this.state.fav ? "../assets/fav.png" : "../assets/no-fav.png"} alt="fav" /></a>}
 
@@ -191,7 +220,7 @@ class Tarjeta extends React.Component {
             <input onChange={this.cambiarComentario} type="text" placeholder='Haz un comentario' /><button onClick={this.enviarComentario}>---></button>
           </div>
           <ul>
-            {this.state.comentariosDelMeme.map((comment) => (
+            {this.state.comentariosDelMeme.map((comment) => (  //map para listar los comentarios
               <li key={comment.idmeme + comment.username + comment.comentario}>{comment.username}: {comment.comentario} </li>
             )
             )}

@@ -34,7 +34,7 @@ router.get('/memes/:idmeme', (req, res, next) => {
 router.post('/', (req, res, next) => {
     const newFav = new Favoritos(req.body.idmeme, req.body.username);
     newFav.save()
-        .then((() => {
+        .then(((res) => {
             res.send(`${req.body.username} felicitaciones! has agregado un nevo meme a favoritos`);
         }))
         .catch((err) => {

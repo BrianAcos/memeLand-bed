@@ -70,7 +70,7 @@ class Favoritos {
                 if (err) {
                     reject(err)
                 } else {
-                    resolve()
+                    resolve(resp)
                 }
             });
         });

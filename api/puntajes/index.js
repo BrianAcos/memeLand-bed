@@ -50,8 +50,6 @@ router.post('/', (req, res, next) => {
         }))
         .catch((err) => {
             res.send('error')
-            console.log(req.body.idmeme, req.body.username, req.body.puntaje, req.body.creador);
-            
         })
 });
 

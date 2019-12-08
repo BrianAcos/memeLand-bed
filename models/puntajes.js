@@ -1,7 +1,7 @@
 const db = require('../services/db-connection');
 
-const GET_PUNTAJES_BY_MEME = 'SELECT * FROM puntajes WHERE idmeme = ?';
-const GET_PUNTAJES_BY_USERNAME = 'SELECT * FROM puntajes WHERE username = ?';
+const GET_PUNTAJES_BY_MEME = 'SELECT sum(puntaje) puntos, count(puntaje) votos FROM puntajes where idmeme = ?';
+const GET_PUNTAJES_BY_USERNAME = 'SELECT sum(puntaje) puntos, count(puntaje) votos FROM puntajes where username = ?';
 const GET_PUNTAJES_BY_CREADOR = 'SELECT sum(puntaje) puntos, count(puntaje) votos FROM puntajes where creador = ?';
 const SAVE_PUNTAJE = 'INSERT INTO puntajes VALUES (?, ?, ?, ?)';
 const DELETE_PUNTAJE = 'DELETE FROM puntajes WHERE idmeme = ? AND username = ?';
@@ -39,10 +39,7 @@ class Puntajes {
                 } else if (results[0] === undefined) {
                     resolve('No has puntuado aun')
                 } else {
-                    const puntajes = results.map((result) => {
-                        const { idmeme, username, puntaje, creador } = result;
-                        return new Puntajes(idmeme, username, puntaje, creador)
-                    });
+                    const puntajes = results[0];
                     resolve(puntajes)
                 }
             });
@@ -58,10 +55,7 @@ class Puntajes {
                 } else if (results[0] === undefined) {
                     resolve('No ha sido comentado aun')
                 } else {
-                    const puntajes = results.map((result) => {
-                        const { idmeme, username, puntaje, creador} = result;
-                        return new Puntajes(idmeme, username, puntaje, creador)
-                    });
+                    const puntajes = results[0];
                     resolve(puntajes)
                 }
             });
