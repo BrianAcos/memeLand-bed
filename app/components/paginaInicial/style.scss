@@ -16,7 +16,6 @@ ul {
   
   .contenido {
     margin: 10px;
-    min-height: 960px;
   }
   
   h1 {
@@ -53,4 +52,10 @@ ul {
   
   body {
     min-width: 250px;
+  }
+
+  div > .estatico {
+    position: sticky;
+    top: 0px;
+    height: 100%;
   }

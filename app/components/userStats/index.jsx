@@ -35,7 +35,7 @@ class UserStats extends React.Component {
     render() {
         const promedio =  Math.round(this.state.puntaje.puntos/this.state.puntaje.votos*10)/10;
         return (
-            <div className="col col-12 col-md-4">
+            <div className="estatico col col-12 col-md-3">
                 <div className="tarjeta">
                     <div className="meme">
                         <h1>Estadisticas:</h1><br/>

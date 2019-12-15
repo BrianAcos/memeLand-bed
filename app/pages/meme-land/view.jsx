@@ -1,7 +1,7 @@
 const React = require('react');
 const { Route } = require('react-router-dom');
 const PaginaInicial = require('../../components/paginaInicial');
-const PaginaPerfil = require('../../components/paginaPerfil');
+const PaginaMeme = require('../../components/paginaMeme');
 
 class MemeLandPage extends React.Component {
     render() {
@@ -22,6 +22,11 @@ class MemeLandPage extends React.Component {
                 exact
                 path="/favoritos/:user"
                 render={(props) => <PaginaInicial {...props} username={username} memes={memes} />}
+                /> 
+                <Route
+                exact
+                path="/meme/:id"
+                render={(props) => <PaginaMeme {...props} username={username} memes={memes} />}
                 />
             </React.Fragment>
         );

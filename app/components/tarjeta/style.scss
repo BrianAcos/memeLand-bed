@@ -43,10 +43,18 @@
     margin: auto;
   }
 
+  .usuario {
+
+  }
+
   .usuario ul {
+    width: auto;
     transition: all 1s ease-out;
     word-break: break-all;
-    width: 80%;
+  }
+
+   div .borrar {
+    margin-left: auto;
   }
 
   @media all and (max-width: 400px) {

@@ -70,7 +70,7 @@ class UserData extends React.Component {
         const avatar = this.props.user.avatar ? this.props.user.avatar : 'assets/user.png';
         if (this.props.username !== this.props.user.username) {
             return (
-                <div className="col col-12 col-md-4">
+                <div className="estatico col col-12 col-md-3">
                     <div className="tarjeta">
                         <div className="row usuario">
                             <img src={`../../${avatar}`} alt="user" />
@@ -94,7 +94,7 @@ class UserData extends React.Component {
             )
         } else {
             return (
-                <div className="col col-12 col-md-4">
+                <div className="estatico col col-12 col-md-3">
                     <div className="tarjeta">
                         <div className="row usuario">
                             <img src={`../../${avatar}`} alt="user" />

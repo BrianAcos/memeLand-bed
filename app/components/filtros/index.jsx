@@ -19,7 +19,7 @@ class Filtros extends React.Component {
 
     render() {
         return (
-            <div className={"col-auto filtros " + (this.state.filtros ? "show" : "hidden")}>
+            <div className={"estatico col-auto filtros " + (this.state.filtros ? "show" : "hidden")}>
                 <div className="form-group">
                     <button onClick={this.changeState} className="buttonFiltros" >F<br />I<br />L<br />T<br />R<br />O<br />S<br />></button>
                     <div className="dropdown">

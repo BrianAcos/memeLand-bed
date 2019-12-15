@@ -7,7 +7,6 @@ class Tarjeta extends React.Component {
 
     this.state = {
       puntuacion: false,
-      redirect: false,
       error: null,
       fav: false,
       comentario: null,
@@ -15,12 +14,29 @@ class Tarjeta extends React.Component {
       puntajeDelMeme: {},
       borrarComponente: false,
     }
-
+    
     this.aprobar = this.aprobar.bind(this);
     this.enviarComentario = this.enviarComentario.bind(this);
     this.cambiarComentario = this.cambiarComentario.bind(this);
     this.changeFav = this.changeFav.bind(this);
     this.cambiarPuntuacion = this.cambiarPuntuacion.bind(this);
+    this.borrarMeme = this.borrarMeme.bind(this);
+  }
+
+  //borrar meme solo si sos el que lo creo
+  borrarMeme() {
+    if (this.props.creador === this.props.username) {
+      fetch(`/api/memes/${this.props.idmeme}`, {
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        method: 'DELETE',
+      })
+        .then(() => {
+          alert('borraste el meme')
+        })
+        .catch(() => {
+          alert('error al borrar el meme')
+        })
+    } else {alert('solo el creador puede borrar el meme')}
   }
 
   //en /noaprobados aparecen los memes no aprobados y se envia la calificacion si o no 
@@ -174,21 +190,31 @@ class Tarjeta extends React.Component {
 
 
   render() {
-    const promedio = this.state.puntajeDelMeme.puntos/this.state.puntajeDelMeme.votos;
+    const path = 'http://localhost:3001';
+    const promedio = this.state.puntajeDelMeme.puntos / this.state.puntajeDelMeme.votos;
     const radioName = `estrellas-${this.props.idmeme}`;  //nombre para identificar a cada estrella de puntuacion
     if (this.state.borrarComponente === true) { return (null) }  //usado para borrar los las tarjetas cuando se aprueba o se desaprueba un meme
+    if (this.props.foto === undefined) {
+      return (
+        <div className="col col-12 col-md-6"><h1>NO HAY MEMES AQUI</h1></div>
+      )
+    }
     return (
-      <div className="col col-12 col-md-6">
+      <div className='col-md-6 offset-md-3'>
         <div className="tarjeta">
           <div className="row usuario">
             <img src="../assets/user.png" alt="user" />
             <ul>
+              <li>{this.props.creador}</li>
               <li><p>{this.props.titulo}</p></li>
             </ul>
+            <img onClick={this.borrarMeme} className="borrar" src="../assets/lupa.png" alt="borrar"/>
           </div>
-          <div className="row meme">
-            <img src={`../${this.props.foto}`} alt="meme" />
-          </div>
+          <a href={path + `/meme/${this.props.idmeme}`}>
+            <div className="row meme">
+              <img src={`../${this.props.foto}`} alt="meme" />
+            </div>
+          </a>
           <div className="row botones">
 
             {this.state.error === 'error-puntuacion' ? //si hay un error al puntuar tira un error en la tarjeta
@@ -239,5 +265,8 @@ class Tarjeta extends React.Component {
     )
   }
 }
+
+//new Date() .day . mount
+// time stamp
 
 module.exports = Tarjeta;

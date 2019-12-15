@@ -27,6 +27,17 @@ router.get('/favoritos/:username', (req, res, next) => {
         })
 });
 
+//obtener memes creados por ese user
+router.get('/users/:username', (req, res, next) => {
+    Memes.getMemeByUser(req.params.username)
+        .then((meme) => {
+            res.send(Memes.convertJSON(meme))
+        })
+        .catch((error) => {
+            next(error);
+        })
+});
+
 //obtener memes no aprobados
 router.get('/aprobacion/null', (req, res, next) => {
     Memes.getMemeNoAprobado()

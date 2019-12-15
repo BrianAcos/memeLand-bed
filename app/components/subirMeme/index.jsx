@@ -37,7 +37,7 @@ class SubirMeme extends React.Component {
                                 <option value="peliculas">Peliculas</option>
                             </select>
                             <br/>
-                            <input name="username" type="hidden" value={username}/>
+                            <input name="username" type="hidden" value={username == undefined || null ? '' : username}/>
                             <button className="subir" type="submit">Subir Meme</button>
                             </form>
                         </div>

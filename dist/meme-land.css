@@ -72,9 +72,12 @@ nav li, .nav-link {
   margin: auto; }
 
 .usuario ul {
+  width: auto;
   transition: all 1s ease-out;
-  word-break: break-all;
-  width: 80%; }
+  word-break: break-all; }
+
+div .borrar {
+  margin-left: auto; }
 
 @media all and (max-width: 400px) {
   .botones img {
@@ -168,8 +171,7 @@ ul {
   background: linear-gradient(to right, #2980b9, #6dd5fa); }
 
 .contenido {
-  margin: 10px;
-  min-height: 960px; }
+  margin: 10px; }
 
 h1 {
   text-shadow: 2px 2px #ff0000;
@@ -200,4 +202,9 @@ button:hover {
 
 body {
   min-width: 250px; }
+
+div > .estatico {
+  position: sticky;
+  top: 0px;
+  height: 100%; }
 

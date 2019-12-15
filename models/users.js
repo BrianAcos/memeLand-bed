@@ -99,8 +99,17 @@ class Users {
         });
     }
 
-    static convertJSON(string) {
-        return JSON.stringify(string);
+    static convertJSON(user) {
+        // const { password, ...otherFields} = user;
+        // const user2 = {
+        //     ...otherFields,
+        // } 
+
+        const user2 = {
+            name: user.name,
+            avatar: user.avatar,
+        }
+        return JSON.stringify(user2);
     }
 }
 

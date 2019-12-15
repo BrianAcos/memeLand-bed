@@ -6,6 +6,7 @@ const GET_MEME_CATEGORIA = 'SELECT * FROM memes WHERE (categoria LIKE ?) AND (ap
 const GET_MEME_FAVORITO_BY_USER = 'SELECT * FROM  favoritos LEFT JOIN memes ON favoritos.idmeme = memes.idmeme WHERE (aprobacion = "si") AND (username = ?)'
 const GET_MEME_NOAPROBADO = 'SELECT * FROM memes WHERE aprobacion is null';
 const GET_MEME_REPROBADO = 'SELECT * FROM memes WHERE aprobacion = "no"';
+const GET_MEME_BY_USER = 'SELECT idmeme,creador,titulo,tags,foto,categoria,fecha,aprobacion,avatar FROM  users INNER JOIN memes ON users.username = memes.creador WHERE (aprobacion = "si") AND (username = ?)';
 const APROBAR_MEME = 'UPDATE memes SET aprobacion = ? WHERE idmeme = ?';
 const SAVE_MEMES = 'INSERT INTO memes VALUES (0, ?, ?, ?, ?, ?, NOW(), null)';
 const DELETE_MEME = 'DELETE FROM memes WHERE idmeme = ?';
@@ -34,6 +35,24 @@ class Memes {
                     const meme = result[0];
                     const modelNewMeme = new Memes(meme.idmeme, meme.creador, meme.titulo, meme.tags, meme.foto, meme.categoria, meme.fecha, meme.aprobacion);
                     resolve(modelNewMeme);
+                }
+            });
+        });
+    }
+
+    static getMemeByUser(username) {
+        return new Promise((resolve, reject) => {
+            db.query(GET_MEME_BY_USER, [username], (error, results) => {
+                if (error) {
+                    reject(error)
+                } else if (results[0] === undefined) {
+                    resolve('404 not found')
+                } else {
+                    const memes = results.map((result) => {
+                        const { idmeme, creador, titulo, tags, foto, categoria, fecha, aprobacion, } = result;
+                        return new Memes(idmeme, creador, titulo, tags, foto, categoria, fecha, aprobacion)
+                    });
+                    resolve(memes)
                 }
             });
         });

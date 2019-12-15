@@ -1,7 +1,21 @@
 const React = require('react');
-const { Link } = require('react-router-dom');
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        modificar: true,
+    }
+
+    this.subirMeme = this.subirMeme.bind(this);
+}
+
+subirMeme(e) {
+    if (this.props.username){
+      null
+    } else {alert('registrate para subir memes'); e.preventDefault()}
+}
   render() {
     const {username} = this.props;
     return (
@@ -12,7 +26,7 @@ class Header extends React.Component {
             <a href="http://localhost:3001" className="nav-link">Inicio</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href='#subir' data-toggle="modal" data-target="#subirMeme">Subir MEME</a>
+            <a onClick={this.subirMeme} className="nav-link" href='#subir' data-toggle="modal" data-target="#subirMeme">Subir MEME</a>
           </li>
           <li className="nav-item">
             
