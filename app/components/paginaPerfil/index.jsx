@@ -9,6 +9,7 @@ const Registro = require('../registro');
 const Footer = require('../footer');
 const Contacto = require('../contacto');
 const Tarjeta = require('../tarjeta');
+const ModificarMeme = require('../modificarMeme');
 
 class PaginaPerfil extends React.Component {
     constructor(props) {
@@ -19,6 +20,14 @@ class PaginaPerfil extends React.Component {
             loading: false,
             error: false,
         }
+
+        this.capturarMeme = this.capturarMeme.bind(this);
+    }
+
+    capturarMeme() {
+        this.state.idmeme = this.props.idmeme;
+        console.log(this.state.idmeme);
+        
     }
 
     render() {
@@ -31,10 +40,10 @@ class PaginaPerfil extends React.Component {
                         <div className="col contenido">
                             <div className="row">
                                 <UserStats user={this.props.user} />
-                                <UserData username={this.props.username} user={this.props.user} />
+                                <UserData capturarMeme={this.capturarMeme} username={this.props.username} user={this.props.user} />
                                 {
                                     memes.map(meme => (
-                                        <Tarjeta username={this.props.username} key={meme.idmeme + meme.creador} idmeme={meme.idmeme} creador={meme.creador} titulo={meme.titulo} tags={meme.tags} foto={meme.foto} categoria={meme.categoria} fecha={meme.fecha} votos={meme.votos} puntaje={meme.puntaje} aprobacion={meme.aprobacion} />
+                                        <Tarjeta user={this.props.user} perfil={'perfil'} username={this.props.username} key={meme.idmeme + meme.creador} idmeme={meme.idmeme} creador={meme.creador} titulo={meme.titulo} tags={meme.tags} foto={meme.foto} categoria={meme.categoria} fecha={meme.fecha} votos={meme.votos} puntaje={meme.puntaje} aprobacion={meme.aprobacion} />
                                     ))
                                 }
                             </div>
@@ -47,6 +56,7 @@ class PaginaPerfil extends React.Component {
                 <Login />
                 <Registro />
                 <Contacto />
+                <ModificarMeme idmeme={this.props.idmeme} />
             </React.Fragment >
         );
     }

@@ -15,7 +15,17 @@ class MemeLandPage extends React.Component {
                 />
                 <Route
                 exact
-                path="/:categoria"
+                path="/noaprobados"
+                render={(props) => <PaginaInicial {...props} administrador={administrador} username={username} memes={memes} />}
+                />
+                <Route
+                exact
+                path="/categorias/:categoria"
+                render={(props) => <PaginaInicial {...props} username={username} memes={memes} />}
+                />
+                <Route
+                exact
+                path="/tags/:tags"
                 render={(props) => <PaginaInicial {...props} username={username} memes={memes} />}
                 />
                 <Route

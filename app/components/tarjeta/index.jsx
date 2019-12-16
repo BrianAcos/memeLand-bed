@@ -14,29 +14,12 @@ class Tarjeta extends React.Component {
       puntajeDelMeme: {},
       borrarComponente: false,
     }
-    
+
     this.aprobar = this.aprobar.bind(this);
     this.enviarComentario = this.enviarComentario.bind(this);
     this.cambiarComentario = this.cambiarComentario.bind(this);
     this.changeFav = this.changeFav.bind(this);
     this.cambiarPuntuacion = this.cambiarPuntuacion.bind(this);
-    this.borrarMeme = this.borrarMeme.bind(this);
-  }
-
-  //borrar meme solo si sos el que lo creo
-  borrarMeme() {
-    if (this.props.creador === this.props.username) {
-      fetch(`/api/memes/${this.props.idmeme}`, {
-        headers: { "Content-Type": "application/json; charset=utf-8" },
-        method: 'DELETE',
-      })
-        .then(() => {
-          alert('borraste el meme')
-        })
-        .catch(() => {
-          alert('error al borrar el meme')
-        })
-    } else {alert('solo el creador puede borrar el meme')}
   }
 
   //en /noaprobados aparecen los memes no aprobados y se envia la calificacion si o no 
@@ -104,8 +87,14 @@ class Tarjeta extends React.Component {
         }),
       })
         .then(() => {
-          this.setState({ comentario: true });
-          this.componentDidMount();
+          const comentario = {
+            username: this.props.username,
+            comentario: this.state.comentario,
+          }
+          this.setState({
+            comentario: true,
+            comentariosDelMeme: [...this.state.comentariosDelMeme, comentario]
+          });
           alert('has comentado');
         })
         .catch(() => {
@@ -146,7 +135,6 @@ class Tarjeta extends React.Component {
             this.setState({ error: 'error-puntuacion' });
           } else {
             this.setState({ puntuacion: true });
-            this.componentDidMount();
             alert(`diste una puntuacion de ${puntaje}`);
           }
         })
@@ -190,6 +178,7 @@ class Tarjeta extends React.Component {
 
 
   render() {
+    const losHuevosLLenos = this.props.user ? this.props.user.username : null;
     const path = 'http://localhost:3001';
     const promedio = this.state.puntajeDelMeme.puntos / this.state.puntajeDelMeme.votos;
     const radioName = `estrellas-${this.props.idmeme}`;  //nombre para identificar a cada estrella de puntuacion
@@ -200,7 +189,7 @@ class Tarjeta extends React.Component {
       )
     }
     return (
-      <div className='col-md-6 offset-md-3'>
+      <div className={this.props.perfil ? 'col-md-6 ml-auto' : 'col-md-6 offset-md-3'} >
         <div className="tarjeta">
           <div className="row usuario">
             <img src="../assets/user.png" alt="user" />
@@ -208,7 +197,10 @@ class Tarjeta extends React.Component {
               <li>{this.props.creador}</li>
               <li><p>{this.props.titulo}</p></li>
             </ul>
-            <img onClick={this.borrarMeme} className="borrar" src="../assets/lupa.png" alt="borrar"/>
+            {/* SI ESTOY EN EL PERFIL APARECE LA CRUZ PARA BORRAR  */}
+            {this.props.perfil && this.props.username === losHuevosLLenos ?
+              <a className="borrar" href="#modificarMeme" data-toggle="modal" data-target="#modificarMeme" ><img src="../assets/config.png" alt="borrar"/></a>
+              : null}
           </div>
           <a href={path + `/meme/${this.props.idmeme}`}>
             <div className="row meme">
@@ -265,8 +257,5 @@ class Tarjeta extends React.Component {
     )
   }
 }
-
-//new Date() .day . mount
-// time stamp
 
 module.exports = Tarjeta;

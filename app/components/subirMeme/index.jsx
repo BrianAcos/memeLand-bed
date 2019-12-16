@@ -37,6 +37,8 @@ class SubirMeme extends React.Component {
                                 <option value="peliculas">Peliculas</option>
                             </select>
                             <br/>
+                            <label htmlFor="tags"><span>Tags:</span></label>
+                            <textarea name="tags" type="text" id="tags" placeholder="Separa con comas los tags ej:memaso,"></textarea><br/>
                             <input name="username" type="hidden" value={username == undefined || null ? '' : username}/>
                             <button className="subir" type="submit">Subir Meme</button>
                             </form>

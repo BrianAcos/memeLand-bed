@@ -10,7 +10,7 @@ router.use('/memes', memesRouter);
 router.use('/users', usersRouter);
 router.use('/favoritos', favoritosRouter);
 router.use('/comentarios', comentariosRouter);
-router.use('/puntajes', puntajesRouter)
+router.use('/puntajes', puntajesRouter);
 router.use(apiErrorHandler);
 
 module.exports = router;

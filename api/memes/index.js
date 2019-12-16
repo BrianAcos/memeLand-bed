@@ -62,6 +62,17 @@ router.post('/aprobacion/null', (req, res, next) => {
     })
 });
 
+//obtener memes segun tags
+router.get('/tags/:id', (req, res, next) => {
+    Memes.getMemeByTag(req.params.id)
+        .then((meme) => {
+            res.send(Memes.convertJSON(meme))
+        })
+        .catch((error) => {
+            next(error);
+        })
+});
+
 //obtener memes segun categoria
 router.get('/categoria/:id', (req, res, next) => {
     Memes.getMemeByCategoria(req.params.id)
@@ -105,7 +116,7 @@ router.post('/', upload.single('imagen'), (req, res, next) => {
     newMeme.save()
         .then((() => {
             res.send(`${user} felicitaciones! has agregado un nevo meme`);
-        }))
+        })) 
         .catch((err) => {
             next(err);
         })
@@ -123,7 +134,9 @@ router.delete('/:id', (req, res, next) => {
 });
 
 //modificar un meme (solo se puede modificar el titulo, tags y categoria)
-router.put('/:id', (req, res, next) => {
+router.post('/:id', (req, res, next) => {
+    console.log('hola' + req.body.titulo);
+    
     const id = req.params.id;
     const titulo = req.body.titulo;
     const tags = req.body.tags;

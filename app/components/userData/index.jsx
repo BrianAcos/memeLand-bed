@@ -62,11 +62,13 @@ class UserData extends React.Component {
             method: 'PUT',
             body: data,
         })
-            .then(() => this.setState({ modificacion: 'exitosa' }))
+            .then(() => {window.location.href = "http://localhost:3001"; this.setState({ modificacion: 'exitosa' })})
             .catch(() => this.setState({ modificacion: 'error' }))
     }
 
     render() {
+        this.props.capturarMeme;
+        const birthday = new Date(this.props.user.birthday);
         const avatar = this.props.user.avatar ? this.props.user.avatar : 'assets/user.png';
         if (this.props.username !== this.props.user.username) {
             return (
@@ -79,7 +81,7 @@ class UserData extends React.Component {
                         <div className="row meme">
                             <ul>
                                 <li>
-                                    Cumpleaños: {this.props.user.birthday}
+                                    Cumpleaños: {`${birthday.getUTCDay()}-${birthday.getUTCMonth()}-${birthday.getUTCFullYear()}`}
                                 </li>
                                 <li>
                                     sexo: {this.props.user.sexo}
@@ -103,7 +105,7 @@ class UserData extends React.Component {
                         <div className="row meme">
                             <ul>
                                 <li>
-                                    Cumpleaños: {this.props.user.birthday}
+                                    Cumpleaños: {`${birthday.getUTCDay()}-${birthday.getUTCMonth()}-${birthday.getUTCFullYear()}`}
                                 </li>
                                 <li>
                                     sexo: {this.props.user.sexo}

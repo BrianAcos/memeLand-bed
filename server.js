@@ -58,7 +58,7 @@ app.use(appRouter);
 app.post('/login', function(req, res) {
     db.query('SELECT * FROM users WHERE username = ?', [req.body.username], function (err, result) {
         if (result.length === 0) {
-            res.end('DATOS INVALIDOS1');
+            res.send('DATOS INVALIDOS');
         } else {
             bcrypt.compare(req.body.password, result[0].password, function (err, resu) {
                 if (resu == true) {
@@ -68,7 +68,7 @@ app.post('/login', function(req, res) {
                     };
                     res.redirect(req.headers.referer);
                 } else { 
-                    res.end('DATOS INVALIDOS2');
+                    res.send('DATOS INVALIDOS');
                 }
             });
         }
