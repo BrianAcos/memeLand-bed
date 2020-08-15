@@ -28,7 +28,7 @@ class Users {
                     resolve('404 not found')
                 } else {
                     const user = result[0];
-                    const birthday = user.birthday.toString();
+                    const birthday = user.birthday && user.birthday.toString();
                     const modelUser = new Users(user.username, user.password, user.nombre, user.email, user.sexo, birthday, user.avatar, user.sobremi, user.administrador);
                     resolve(modelUser); 
                 }

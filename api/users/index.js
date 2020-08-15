@@ -80,7 +80,7 @@ router.delete('/:id', (req, res, next) => {
 
 //modificar un user (sexo, cumpleaños, sobremi, nombre)
 router.put('/:id', upload.single('avatar'), (req, res, next) => {
-    const avatar = `users/${req.file.filename}`;
+    const avatar = `users/${'req.file'.filename}`;
     const id = req.params.id;
     const sexo = req.body.sexo;
     const birthday = req.body.birthday;

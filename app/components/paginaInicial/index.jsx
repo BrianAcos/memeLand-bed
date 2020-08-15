@@ -18,7 +18,7 @@ class PaginaInicial extends React.Component {
         <div className="container-fluid">
           <div className="row">
             <Filtros />
-            <div className="col-10 contenido">
+            <div className="col contenido">
               <div className="row">
                 {
                   memes.map(meme => (

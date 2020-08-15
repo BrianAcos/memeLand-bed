@@ -1,4 +1,3 @@
-//import React from 'react';
 const React = require('react');
 
 class Tarjeta extends React.Component {
@@ -17,8 +16,10 @@ class Tarjeta extends React.Component {
 
     this.aprobar = this.aprobar.bind(this);
     this.enviarComentario = this.enviarComentario.bind(this);
+    this.eliminarComentario = this.eliminarComentario.bind(this);
     this.cambiarComentario = this.cambiarComentario.bind(this);
     this.changeFav = this.changeFav.bind(this);
+    this.pressEnter = this.pressEnter.bind(this);
     this.cambiarPuntuacion = this.cambiarPuntuacion.bind(this);
   }
 
@@ -74,7 +75,7 @@ class Tarjeta extends React.Component {
       });
   }
 
-  //envia el comentario que hizo el usuario y tira de nuevo el componentdidmount para que aparezca el comentario que realizo
+  //envia el comentario que hizo el usuario y lo pongo en el estado
   enviarComentario() {
     if (this.props.username) {
       fetch('/api/comentarios', {
@@ -106,14 +107,38 @@ class Tarjeta extends React.Component {
     }
   }
 
-  //guarda en el estado lo que va comentando el usuario en el meme
-  cambiarComentario(event) {
+  //eliminar comentario 
+  eliminarComentario(comentario) {
     if (this.props.username) {
-      this.setState({ comentario: event.target.value });
-    } else {
-      alert('debes estar registrado para comentar');
+      fetch('/api/comentarios', {
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        method: 'DELETE',
+        body: JSON.stringify({
+          idmeme: this.props.idmeme,
+          username: this.props.username, // EL USUARIO QUE HIZO CLICK ESTA EN LA SESSION
+          comentario,
+        }),
+      })
+        .then(() => {
+          alert('has borrado un comentario');
+        })
+        .catch(() => {
+          this.setState({ error: 'error-comentario' });
+          alert('error al comentar');
+        })
     }
   }
+
+  //guarda en el estado lo que va comentando el usuario en el meme
+  cambiarComentario(event) {
+      this.setState({ comentario: event.target.value });
+  }
+
+  pressEnter(e) {
+    if (e.key === 'Enter' && this.state.comentario) {
+        this.enviarComentario();
+    }
+}
 
   //cuando hace click en las estrellas califica el meme
   cambiarPuntuacion(event) {
@@ -178,7 +203,8 @@ class Tarjeta extends React.Component {
 
 
   render() {
-    const losHuevosLLenos = this.props.user ? this.props.user.username : null;
+    const userProfile = this.props.user && this.props.user.username;
+    const userLoged = this.props.username;
     const path = 'http://localhost:3001';
     const promedio = this.state.puntajeDelMeme.puntos / this.state.puntajeDelMeme.votos;
     const radioName = `estrellas-${this.props.idmeme}`;  //nombre para identificar a cada estrella de puntuacion
@@ -198,7 +224,7 @@ class Tarjeta extends React.Component {
               <li><p>{this.props.titulo}</p></li>
             </ul>
             {/* SI ESTOY EN EL PERFIL APARECE LA CRUZ PARA BORRAR  */}
-            {this.props.perfil && this.props.username === losHuevosLLenos ?
+            {this.props.perfil && userLoged === userProfile ?
               <a className="borrar" href="#modificarMeme" data-toggle="modal" data-target="#modificarMeme" ><img src="../assets/config.png" alt="borrar"/></a>
               : null}
           </div>
@@ -244,11 +270,14 @@ class Tarjeta extends React.Component {
             <a href="#???"><img src="../assets/compartir.png" alt="share" /></a>
           </div>
           <div className="row">
-            <input onChange={this.cambiarComentario} type="text" placeholder='Haz un comentario' /><button onClick={this.enviarComentario}>---></button>
+            <input onKeyPress={this.pressEnter} onChange={this.cambiarComentario} type="text" placeholder='Haz un comentario' /><button onClick={this.enviarComentario}>---></button>
           </div>
           <ul>
             {this.state.comentariosDelMeme.map((comment) => (  //map para listar los comentarios
-              <li key={comment.idmeme + comment.username + comment.comentario}>{comment.username}: {comment.comentario} </li>
+            <React.Fragment>
+            <li key={comment.idmeme + comment.username + comment.comentario}>{comment.username}: {comment.comentario} </li>
+            {userLoged === comment.username && <button onClick={this.eliminarComentario(comment.comentario)}>X</button>}
+            </React.Fragment>
             )
             )}
           </ul>

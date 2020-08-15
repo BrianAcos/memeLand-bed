@@ -1,4 +1,5 @@
 const React = require('react');
+const config = require('../../../config');
 
 class UserData extends React.Component {
     constructor(props) {
@@ -42,7 +43,7 @@ class UserData extends React.Component {
     }
 
     borrarUser() {
-        fetch(`http://localhost:3001/api/users/${this.props.user.username}`, {
+        fetch(`${config.url}/api/users/${this.props.user.username}`, {
             method: 'DELETE',
         })
             .then((res) => { alert('borraste usuario'), console.log(res) }
@@ -58,11 +59,11 @@ class UserData extends React.Component {
         data.append('sobremi', this.sobremi);
         data.append('sexo', this.sexo);
         data.append('birthday', this.birthday);
-        fetch(`http://localhost:3001/api/users/${this.props.user.username}`, {
+        fetch(`${config.url}/api/users/${this.props.user.username}`, {
             method: 'PUT',
             body: data,
         })
-            .then(() => {window.location.href = "http://localhost:3001"; this.setState({ modificacion: 'exitosa' })})
+            .then(() => { window.location.href = config.url; this.setState({ modificacion: 'exitosa' }) })
             .catch(() => this.setState({ modificacion: 'error' }))
     }
 
@@ -105,7 +106,7 @@ class UserData extends React.Component {
                         <div className="row meme">
                             <ul>
                                 <li>
-                                    Cumpleaños: {`${birthday.getUTCDay()}-${birthday.getUTCMonth()}-${birthday.getUTCFullYear()}`}
+                                    Cumpleaños: {`${birthday.getUTCDay()}/${birthday.getUTCMonth()}/${birthday.getUTCFullYear()}`}
                                 </li>
                                 <li>
                                     sexo: {this.props.user.sexo}
@@ -134,6 +135,8 @@ class UserData extends React.Component {
                                 <div>
                                     <button onClick={this.modificarUser}>Modificar</button>
                                     <button onClick={this.borrarUser} className='btn-danger' >Borrar Cuenta</button>
+                                    <button onClick={this.add} className='btn-danger' >Add</button>
+                                    <button onClick={this.subtract} className='btn-danger' >subrtact</button>
                                 </div>
                             }
                         </div>

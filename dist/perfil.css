@@ -125,7 +125,11 @@ div .borrar {
   transition: all 1s ease-out; }
 
 .form-group {
-  padding-top: 20px; }
+  padding-top: 20px;
+  width: 130px; }
+
+#mySearch {
+  width: 100px; }
 
 .otrosFiltros li {
   padding: 5px;
