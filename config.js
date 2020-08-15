@@ -12,6 +12,6 @@ if (environment === 'production') {
 
 module.exports = {
     ...environmentConfigis,
-    PORT: process.env.port || 3000,
+    PORT: process.env.PORT || 3001,
     static: './dist',
 };
