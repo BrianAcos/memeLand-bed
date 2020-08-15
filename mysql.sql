@@ -34,7 +34,7 @@ CREATE TABLE memes(
 CREATE TABLE comentarios(
     idmeme INTEGER,
     username VARCHAR(45),
-    comentario VARCHAR(400) NOT NULL,
+    comentario VARCHAR(255) NOT NULL,
     PRIMARY KEY (idmeme, username, comentario),
     CONSTRAINT fk_comentario_meme
     FOREIGN KEY (idmeme)
