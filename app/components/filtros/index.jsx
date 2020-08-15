@@ -1,4 +1,5 @@
 const React = require('react');
+const config = require('../../../config');
 
 class Filtros extends React.Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class Filtros extends React.Component {
     }
 
     searchTag() {
-        window.location.href = `http://localhost:3001/tags/${this.mySearch}`;
+        window.location.href = `${config.url}/tags/${this.mySearch}`;
     }
 
     saveTag(e) {

@@ -1,4 +1,5 @@
 const React = require('react');
+const config = require('../../../config');
 
 class Tarjeta extends React.Component {
   constructor(props) {
@@ -205,7 +206,6 @@ class Tarjeta extends React.Component {
   render() {
     const userProfile = this.props.user && this.props.user.username;
     const userLoged = this.props.username;
-    const path = 'http://localhost:3001';
     const promedio = this.state.puntajeDelMeme.puntos / this.state.puntajeDelMeme.votos;
     const radioName = `estrellas-${this.props.idmeme}`;  //nombre para identificar a cada estrella de puntuacion
     if (this.state.borrarComponente === true) { return (null) }  //usado para borrar los las tarjetas cuando se aprueba o se desaprueba un meme
@@ -228,7 +228,7 @@ class Tarjeta extends React.Component {
               <a className="borrar" href="#modificarMeme" data-toggle="modal" data-target="#modificarMeme" ><img src="../assets/config.png" alt="borrar"/></a>
               : null}
           </div>
-          <a href={path + `/meme/${this.props.idmeme}`}>
+          <a href={config.url + `/meme/${this.props.idmeme}`}>
             <div className="row meme">
               <img src={`../${this.props.foto}`} alt="meme" />
             </div>

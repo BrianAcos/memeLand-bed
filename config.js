@@ -4,10 +4,12 @@ const environmentConfigis = {};
 
 if (environment === 'production') {
     console.log('PRODUCCION');
-    console.log(process.env);
-    // TODO: Modificar environmentConfigis según sea necesario
+    environmentConfigis.url = 'https://meme-land-test.herokuapp.com'
+    environmentConfigis.production = true;
 } else {
+    console.log('DEBUGGER');
     environmentConfigis.url = 'http://localhost:3001';
+    environmentConfigis.production = false;
 }
 
 module.exports = {

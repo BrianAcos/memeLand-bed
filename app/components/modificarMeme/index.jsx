@@ -1,4 +1,5 @@
 const React = require('react');
+const config = require('../../../config');
 
 class ModificarMeme extends React.Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class ModificarMeme extends React.Component {
         data.append('tags', this.tags);
         data.append('titulo', this.titulo);
         data.append('categoria', this.categoria);
-        fetch('http://localhost:3001/api/memes/1', {
+        fetch(`${config.url}/api/memes/1`, {
             method: 'PUT',
             body: data,
         })

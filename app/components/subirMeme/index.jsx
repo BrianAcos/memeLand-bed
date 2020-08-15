@@ -1,4 +1,5 @@
 const React = require('react');
+const config = require('../../../config');
 
 class SubirMeme extends React.Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class SubirMeme extends React.Component {
                             </button>
                         </div>
                         <div className="modal-body mr-auto ml-auto">
-                            <form className="subirMeme" action="http://localhost:3001/api/memes" method="post" encType="multipart/form-data">
+                            <form className="subirMeme" action={`${config.url}/api/memes`} method="post" encType="multipart/form-data">
                             <label htmlFor="titulo"><span>Titulo:</span></label>
                             <input name="titulo" required type="text" id="titulo" placeholder="Título para el meme"></input>
                             <br/>

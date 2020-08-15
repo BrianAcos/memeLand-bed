@@ -1,4 +1,5 @@
 const React = require('react')
+const config = require('../../../config');
 
 class Login extends React.Component {
     render() {
@@ -13,7 +14,7 @@ class Login extends React.Component {
                             </button>
                         </div>
                         <div className="modal-body mr-auto ml-auto">
-                            <form className="login" action="http://localhost:3001/login" method="post" encType="application/x-www-form-urlencoded">
+                            <form className="login" action={`${config.url}/login`} method="post" encType="application/x-www-form-urlencoded">
                                 <label htmlFor="username"><span>Nombre de usuario:</span></label>
                                 <input required id="username" name="username"></input><br/>
                                 <label htmlFor="password"><span>Contraseña:</span></label>

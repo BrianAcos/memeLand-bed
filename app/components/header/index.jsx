@@ -1,4 +1,5 @@
 const React = require('react');
+const config = require('../../../config');
 
 class Header extends React.Component {
   constructor(props) {
@@ -13,10 +14,10 @@ class Header extends React.Component {
     const { username } = this.props;
     return (
       <nav className="navbar navbar-expand">
-        <a href="http://localhost:3001" className="navbar-brand" ><img src="../assets/ico.png" alt="ico" className="ico" /></a>
+        <a href={config.url} className="navbar-brand" ><img src="../assets/ico.png" alt="ico" className="ico" /></a>
         <ul className="navbar-nav mr-auto ml-auto">
           <li className="nav-item">
-            <a href="http://localhost:3001" className="nav-link">Inicio</a>
+            <a href={config.url} className="nav-link">Inicio</a>
           </li>
           {username ?
             <li className="nav-item">
@@ -28,10 +29,10 @@ class Header extends React.Component {
         <ul>
           {username ?
             <li>
-              <a href={`http://localhost:3001/perfil/${username}`}>PERFIL</a><br />
-              <a href={`http://localhost:3001/noaprobados`}>MODERAR</a><br />
-              <a href={`http://localhost:3001/favoritos/${username}`}>FAVORITOS</a><br />
-              <a href="http://localhost:3001/api/cerrarSesion">CERRAR SESION</a>
+              <a href={`${config.url}/perfil/${username}`}>PERFIL</a><br />
+              <a href={`${config.url}/noaprobados`}>MODERAR</a><br />
+              <a href={`${config.url}/favoritos/${username}`}>FAVORITOS</a><br />
+              <a href={`${config.url}/api/cerrarSesion`}>CERRAR SESION</a>
             </li>
             :
             <li>
